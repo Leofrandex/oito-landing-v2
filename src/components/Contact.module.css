@@ -1,0 +1,130 @@
+.contact {
+    padding: 6rem 4rem;
+    background-color: transparent;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.headlineContainer {
+    text-align: left;
+}
+
+.headline {
+    font-family: var(--font-dm-sans);
+    font-size: var(--text-h1);
+    line-height: 0.8;
+    /* Reduced for tighter spacing */
+    color: var(--color-hero-bg);
+}
+
+.brandWord {
+    font-family: var(--font-dongle);
+    font-size: 1.3em;
+    line-height: 0.8;
+    font-weight: 400;
+    display: block;
+}
+
+.formContainer {
+    background-color: var(--color-accent);
+    padding: 3rem;
+    border-radius: 40px;
+    box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.3);
+    width: 100%;
+    justify-self: end;
+    color: var(--color-hero-bg);
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.inputGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.label {
+    font-family: var(--font-dm-sans);
+    font-size: var(--text-body);
+    color: var(--color-hero-bg);
+    opacity: 0.8;
+    font-weight: 500;
+}
+
+.input,
+.textarea {
+    background-color: rgba(255, 255, 255, 0.4);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+    padding: 1rem;
+    color: var(--color-hero-bg);
+    font-family: var(--font-dm-sans);
+    font-size: var(--text-body);
+    outline: none;
+    transition: all 0.2s;
+}
+
+.input:focus,
+.textarea:focus {
+    background-color: #ffffff;
+    border-color: var(--color-hero-bg);
+}
+
+.textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+
+.submitButton {
+    background-color: var(--color-hero-bg);
+    color: white;
+    padding: 1rem;
+    border-radius: 9999px;
+    font-family: var(--font-dm-sans);
+    font-weight: 700;
+    font-size: var(--text-body);
+    margin-top: 0.5rem;
+    transition: transform 0.2s, background-color 0.2s;
+    border: none;
+    cursor: pointer;
+}
+
+.submitButton:hover {
+    background-color: black;
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.2);
+}
+
+@media (max-width: 900px) {
+    .contact {
+        grid-template-columns: 1fr;
+        padding: 4rem 1.5rem;
+        gap: 3rem;
+        text-align: center;
+    }
+
+    .headlineContainer {
+        text-align: center;
+    }
+
+    .formContainer {
+        padding: 2rem;
+        justify-self: center;
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+    }
+
+    .contact {
+        overflow: hidden;
+        /* Prevent spillover */
+    }
+}

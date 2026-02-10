@@ -1,0 +1,449 @@
+.portfolio {
+    padding: 6rem 2rem;
+    background: radial-gradient(circle at top right, #002a2c, #004346);
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 80vh;
+}
+
+.portfolio::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3F%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+    opacity: 0.05;
+    pointer-events: none;
+}
+
+.contentContainer {
+    width: 100%;
+    max-width: 1200px;
+    /* Constrain width for better readability */
+    margin: 0 auto;
+    position: relative;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+}
+
+.sectionHeader {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.sectionTitle {
+    font-family: var(--font-dm-sans);
+    font-size: var(--text-h2);
+    color: #fff;
+    margin-bottom: 1rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+}
+
+.sectionDescription {
+    font-family: var(--font-dm-sans);
+    font-size: var(--text-body);
+    color: rgba(255, 255, 255, 0.6);
+    max-width: 100%;
+    margin: 0 auto;
+    line-height: 1.6;
+}
+
+.carouselWrapper {
+    position: relative;
+    width: 100%;
+}
+
+/* Main Card */
+.cardContainer {
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 32px;
+    padding: 2.5rem 3.5rem;
+    /* Reduced vertical padding, kept horizontal or adjusted as needed. actually let's just make it 3rem all around */
+    padding: 3rem;
+    box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.6);
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+    min-height: 500px;
+    overflow: hidden;
+    /* For animations */
+}
+
+/* Header Section */
+.cardHeader {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding-bottom: 2rem;
+    text-align: center;
+}
+
+.cardTitle {
+    font-family: var(--font-dm-sans);
+    font-size: var(--text-subtitle);
+    color: #fff;
+    margin-bottom: 1rem;
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+}
+
+.cardDescription {
+    font-family: var(--font-dm-sans);
+    font-size: var(--text-body);
+    color: rgba(255, 255, 255, 0.7);
+    line-height: 1.6;
+    max-width: 100%;
+    margin: 0 auto;
+    text-wrap: balance;
+}
+
+/* Body Section (Grid) */
+.cardBody {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    /* 1/3 KPI, 2/3 Workflow */
+    gap: 4rem;
+    align-items: center;
+    height: 100%;
+}
+
+/* KPI Column */
+.kpiColumn {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    border-right: 1px solid rgba(255, 255, 255, 0.1);
+    padding-right: 2rem;
+    justify-content: center;
+}
+
+.kpiItem {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    transition: transform 0.2s ease;
+}
+
+.kpiItem:hover {
+    transform: translateX(5px);
+    background: rgba(255, 255, 255, 0.06);
+}
+
+.kpiIconWrapper {
+    width: 56px;
+    height: 56px;
+    background: rgba(9, 188, 138, 0.15);
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(9, 188, 138, 0.2);
+    flex-shrink: 0;
+}
+
+.kpiIcon {
+    color: var(--color-accent);
+}
+
+.kpiContent {
+    display: flex;
+    flex-direction: column;
+}
+
+.kpiValue {
+    font-family: var(--font-dongle);
+    font-size: 2.5rem;
+    /* Large value */
+    line-height: 0.9;
+    font-weight: 700;
+    color: #fff;
+}
+
+.kpiLabel {
+    font-family: var(--font-dm-sans);
+    font-size: 0.95rem;
+    color: rgba(255, 255, 255, 0.6);
+    font-weight: 500;
+}
+
+/* Workflow Column */
+.workflowColumn {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    padding: 0 2rem;
+    width: 100%;
+}
+
+/* The Connecting Path */
+.workflowColumn::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 10%;
+    right: 10%;
+    height: 2px;
+    background: repeating-linear-gradient(90deg,
+            rgba(255, 255, 255, 0.1) 0,
+            rgba(255, 255, 255, 0.1) 10px,
+            transparent 10px,
+            transparent 20px);
+    transform: translateY(-50%);
+    z-index: 0;
+}
+
+.workflowStep {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    position: relative;
+    z-index: 2;
+}
+
+.workflowIconBox {
+    width: 90px;
+    height: 90px;
+    background: #004346;
+    /* Solid background to cover the line */
+    border-radius: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+}
+
+.workflowStep:hover .workflowIconBox {
+    transform: translateY(-5px);
+    border-color: var(--color-accent);
+    box-shadow: 0 15px 40px rgba(9, 188, 138, 0.2);
+    background: #005a5e;
+}
+
+.workflowStepIcon {
+    color: #fff;
+    width: 40px;
+    height: 40px;
+}
+
+.workflowArrow {
+    color: var(--color-accent);
+    /* Green arrows */
+    opacity: 0.8;
+    z-index: 3;
+    background: #004346;
+    /* Background for arrow to sit clearly on the line */
+    border-radius: 50%;
+    padding: 4px;
+    animation: pulseArrow 2s infinite;
+}
+
+@keyframes pulseArrow {
+
+    0%,
+    100% {
+        opacity: 0.4;
+        transform: translateX(0);
+    }
+
+    50% {
+        opacity: 0.8;
+        transform: translateX(5px);
+    }
+}
+
+/* Navigation Buttons */
+.navButton {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #fff;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    z-index: 20;
+    backdrop-filter: blur(5px);
+}
+
+.prevBtn {
+    left: -80px;
+}
+
+.nextBtn {
+    right: -80px;
+}
+
+.navButton:hover {
+    background: var(--color-accent);
+    color: #000;
+    transform: translateY(-50%) scale(1.1);
+}
+
+/* Indicators */
+.indicators {
+    display: flex;
+    justify-content: center;
+    gap: 0.8rem;
+    margin-top: 1rem;
+}
+
+.footerText {
+    text-align: center;
+    font-family: var(--font-dm-sans);
+    font-size: 1.8rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, var(--color-accent) 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-top: 2rem;
+    letter-spacing: 0.05em;
+    filter: drop-shadow(0 0 10px rgba(9, 188, 138, 0.2));
+    transition: all 0.3s ease;
+    cursor: default;
+}
+
+.footerText:hover {
+    filter: drop-shadow(0 0 20px rgba(9, 188, 138, 0.5));
+    transform: scale(1.05);
+}
+
+.orb {
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.orbActive {
+    width: 32px;
+    height: 8px;
+    background-color: var(--color-accent);
+    border-radius: 4px;
+    box-shadow: 0 0 10px var(--color-accent);
+}
+
+.orbInactive {
+    width: 8px;
+    height: 8px;
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+    .cardBody {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+
+    .kpiColumn {
+        border-right: none;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        padding-right: 0;
+        padding-bottom: 2rem;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+
+    .kpiItem {
+        flex: 1;
+    }
+
+    .prevBtn {
+        left: -20px;
+    }
+
+    .nextBtn {
+        right: -20px;
+    }
+
+    .contentContainer {
+        padding: 0 1rem;
+    }
+
+    .navButton {
+        width: 40px;
+        height: 40px;
+    }
+}
+
+@media (max-width: 768px) {
+    .kpiColumn {
+        flex-direction: column;
+    }
+
+    .workflowColumn {
+        flex-direction: column;
+        gap: 2rem;
+        padding: 2rem 0;
+    }
+
+    .workflowColumn::before {
+        width: 2px;
+        height: 100%;
+        top: 0;
+        bottom: 0;
+        left: 50%;
+        right: auto;
+        transform: translateX(-50%);
+        background: repeating-linear-gradient(180deg,
+                rgba(255, 255, 255, 0.1) 0,
+                rgba(255, 255, 255, 0.1) 10px,
+                transparent 10px,
+                transparent 20px);
+    }
+
+    .workflowIconBox {
+        width: 70px;
+        height: 70px;
+    }
+
+    .workflowStepIcon {
+        width: 28px;
+        height: 28px;
+    }
+
+    .workflowArrow {
+        transform: rotate(90deg);
+        /* Point down */
+        margin: 0.5rem 0;
+        animation: pulseArrowVertical 2s infinite;
+    }
+}
+
+@keyframes pulseArrowVertical {
+
+    0%,
+    100% {
+        opacity: 0.4;
+        transform: rotate(90deg) translateY(0);
+    }
+
+    50% {
+        opacity: 0.8;
+        transform: rotate(90deg) translateY(5px);
+    }
+}

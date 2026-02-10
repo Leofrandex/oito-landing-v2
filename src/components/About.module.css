@@ -1,0 +1,154 @@
+.about {
+    padding: 8rem 4rem;
+    background-color: transparent;
+}
+
+.introSection {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    max-width: 1200px;
+    margin: 0 auto 6rem;
+    align-items: center;
+}
+
+.imagePlaceholder {
+    width: 100%;
+    /* aspect-ratio: 1; Removed to let Globe control aspect */
+    /* background-color: #f0f0f0; Removed */
+    /* border-radius: 20px; Removed for emerging effect */
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: flex-end;
+    /* Align bottom */
+    justify-content: center;
+    mask-image: linear-gradient(to bottom, black 50%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to bottom, black 50%, transparent 100%);
+}
+
+.textContent {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+}
+
+.introBlock {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    text-align: center;
+    /* Center the text */
+}
+
+.introTitle {
+    font-family: var(--font-dm-sans);
+    font-weight: 700;
+    font-size: var(--text-subtitle);
+    /* Reduced font size again */
+    line-height: 1.2;
+    color: var(--color-hero-bg);
+}
+
+.introParagraph {
+    font-family: var(--font-dm-sans);
+    font-size: var(--text-body);
+    /* Reduced size */
+    color: var(--color-text-charcoal);
+    line-height: 1.6;
+}
+
+.highlight {
+    color: var(--color-accent);
+    font-weight: bold;
+}
+
+.brandHighlight {
+    font-family: var(--font-dongle);
+    color: var(--color-accent);
+    font-size: var(--text-h2);
+    /* Adjusted for Dongle's scale */
+    line-height: 0.8;
+    font-weight: 400;
+    display: inline-block;
+    transform: translateY(1px);
+    /* Vertical align adjustment */
+}
+
+.brandHighlightLarge {
+    font-family: var(--font-dongle);
+    color: var(--color-accent);
+    font-size: var(--text-h1);
+    /* Larger for titles */
+    line-height: 0.8;
+    font-weight: 400;
+    display: inline-block;
+    transform: translateY(3px);
+    /* Adjusted alignment for larger text */
+}
+
+.infoArea {
+    display: flex;
+    flex-direction: column;
+    gap: 4rem;
+    margin-top: 4rem;
+}
+
+.infoTitle {
+    font-family: var(--font-dm-sans);
+    font-size: var(--text-h2);
+    color: var(--color-hero-bg);
+    text-align: center;
+    font-weight: 700;
+}
+
+.columnsContainer {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 4rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.column {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    align-items: center;
+    text-align: center;
+}
+
+.columnTitle {
+    font-family: var(--font-dm-sans);
+    font-size: var(--text-subtitle);
+    color: var(--color-hero-bg);
+    font-weight: 700;
+    line-height: 1.1;
+}
+
+.columnText {
+    font-family: var(--font-dm-sans);
+    font-size: var(--text-body);
+    color: var(--color-hero-bg);
+    line-height: 1.6;
+}
+
+@media (max-width: 768px) {
+    .about {
+        padding: 4rem 1.5rem;
+    }
+
+    .headline {
+        margin-bottom: 4rem;
+    }
+
+    .introSection {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+    }
+
+    .columnsContainer {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+    }
+}

@@ -1,0 +1,131 @@
+.hero {
+    min-height: 100dvh;
+    /* Use dynamic viewport height for better mobile support */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 0 2rem;
+    background-color: transparent;
+    padding-top: 80px;
+    /* Space for fixed header */
+    margin-bottom: 5vh;
+    /* Slight separation from next section */
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2.5rem;
+    max-width: 900px;
+    z-index: 10;
+}
+
+.headline {
+    font-family: var(--font-dm-sans);
+    line-height: 1;
+    color: var(--color-hero-bg);
+    font-weight: 800;
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+    justify-content: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.oitoText {
+    font-family: var(--font-dongle);
+    color: #90E9BE;
+    text-transform: lowercase;
+    font-weight: 400;
+    font-size: calc(var(--text-h1) * 2);
+    /* Keep WOW size but adjust alignment */
+    line-height: 0.8;
+}
+
+.mainText {
+    font-size: var(--text-h1);
+    /* Slightly smaller to fit better on one line */
+    letter-spacing: -0.02em;
+    background: linear-gradient(135deg, var(--color-hero-bg) 0%, rgba(20, 20, 20, 0.8) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    color: var(--color-hero-bg);
+    text-transform: uppercase;
+}
+
+.description {
+    font-family: var(--font-dm-sans);
+    color: var(--color-text-charcoal);
+    font-size: var(--text-subtitle);
+    line-height: 1.5;
+    max-width: 700px;
+    opacity: 0.9;
+}
+
+.ctaButton {
+    background-color: var(--color-hero-bg);
+    color: var(--color-text-light);
+    padding: 0.8rem 3.5rem;
+    /* Adjusted vertical padding for larger text */
+    border-radius: 9999px;
+    font-family: var(--font-dongle);
+    font-weight: 400;
+    /* Dongle is bold enough */
+    font-size: 2.5rem;
+    line-height: 0.8;
+    text-transform: lowercase;
+    padding-bottom: 0.6rem;
+    /* Visual adjustment for Dongle baseline */
+    width: fit-content;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    /* Bouncy transition */
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    outline: none;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+.ctaButton:hover {
+    transform: translateY(-4px) scale(1.02);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+    background-color: var(--color-accent);
+    color: var(--color-hero-bg);
+}
+
+/* Tablet & Mobile Responsiveness */
+@media (max-width: 1024px) {
+    .headline {
+        gap: 1rem;
+        flex-direction: column;
+    }
+
+    .oitoText {
+        font-size: 6rem;
+        /* Smaller than calc(h1 * 2) for mobile */
+    }
+}
+
+@media (max-width: 768px) {
+    .hero {
+        padding-top: 100px;
+    }
+
+    .description {
+        padding: 0 1rem;
+    }
+
+    .ctaButton {
+        padding: 0.8rem 2rem;
+        font-size: 2rem;
+        width: 100%;
+        max-width: 300px;
+    }
+}

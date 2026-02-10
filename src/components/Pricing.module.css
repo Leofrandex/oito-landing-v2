@@ -1,0 +1,159 @@
+.pricingSection {
+    position: relative;
+    /* Height is standard 100vh; ScrollTrigger handles the pinning duration */
+    min-height: 100vh;
+    height: 100vh;
+    background-color: transparent;
+    overflow: hidden;
+    /* Prevent horizontal overflow from scaling elements if any */
+}
+
+.stickyContainer {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 4rem;
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 4rem;
+    z-index: 10;
+}
+
+.title {
+    font-family: var(--font-dm-sans);
+    font-size: var(--text-h2);
+    color: var(--color-hero-bg);
+    margin-bottom: 1rem;
+    font-weight: 700;
+}
+
+.highlight {
+    color: var(--color-accent);
+}
+
+.subtitle {
+    font-family: var(--font-dm-sans);
+    font-size: var(--text-subtitle);
+    color: var(--color-text-charcoal);
+    opacity: 0.8;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.contentGrid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 4rem;
+    max-width: 1200px;
+    width: 100%;
+    margin: 0 auto;
+    align-items: center;
+    height: 60%;
+}
+
+/* Left Column: Animated Image Placeholder */
+.imageContainer {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+
+
+/* Right Column: Pricing & Thermometer */
+.pricingControls {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    align-items: flex-start;
+    height: 100%;
+    justify-content: center;
+}
+
+.priceDisplay {
+    font-family: var(--font-dm-sans);
+    font-size: var(--text-h1);
+    font-weight: 700;
+    color: var(--color-accent);
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+}
+
+.currency {
+    font-size: var(--text-h2);
+    vertical-align: top;
+    margin-right: 0.2rem;
+}
+
+.thermometerContainer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 2rem;
+    height: 300px;
+    width: 100%;
+}
+
+.thermometerLabel {
+    font-family: var(--font-dongle);
+    font-size: var(--text-h2);
+    line-height: 1;
+    color: var(--color-hero-bg);
+}
+
+/* The Layout for the bar itself */
+.thermometerWrapper {
+    position: relative;
+    height: 100%;
+    width: 24px;
+    background-color: #eee;
+    border-radius: 999px;
+    overflow: hidden;
+}
+
+.thermometerFill {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: var(--color-hero-bg);
+    border-radius: 999px;
+}
+
+@media (max-width: 1024px) {
+    .pricingSection {
+        height: auto;
+        min-height: auto;
+        padding: 4rem 1rem;
+    }
+
+    .contentGrid {
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr auto;
+        gap: 2rem;
+    }
+
+    .imageContainer {
+        min-height: 300px;
+    }
+
+    .pricingControls {
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        height: auto;
+        width: 100%;
+    }
+
+    .thermometerContainer {
+        display: none;
+    }
+}

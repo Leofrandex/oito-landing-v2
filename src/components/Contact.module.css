@@ -17,7 +17,6 @@
     font-family: var(--font-dm-sans);
     font-size: var(--text-h1);
     line-height: 0.8;
-    /* Reduced for tighter spacing */
     color: var(--color-hero-bg);
 }
 
@@ -30,13 +29,13 @@
 }
 
 .formContainer {
-    background-color: var(--color-accent);
+    background-color: var(--color-hero-bg);
     padding: 3rem;
     border-radius: 40px;
     box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.3);
     width: 100%;
     justify-self: end;
-    color: var(--color-hero-bg);
+    color: var(--color-text-light);
 }
 
 .form {
@@ -54,28 +53,33 @@
 .label {
     font-family: var(--font-dm-sans);
     font-size: var(--text-body);
-    color: var(--color-hero-bg);
-    opacity: 0.8;
+    color: var(--color-text-light);
+    opacity: 0.9;
     font-weight: 500;
 }
 
 .input,
 .textarea {
-    background-color: rgba(255, 255, 255, 0.4);
-    border: 1px solid rgba(0, 0, 0, 0.1);
+    background-color: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 12px;
     padding: 1rem;
-    color: var(--color-hero-bg);
+    color: var(--color-text-light);
     font-family: var(--font-dm-sans);
     font-size: var(--text-body);
     outline: none;
     transition: all 0.2s;
 }
 
+.input::placeholder,
+.textarea::placeholder {
+    color: rgba(255, 255, 255, 0.4);
+}
+
 .input:focus,
 .textarea:focus {
-    background-color: #ffffff;
-    border-color: var(--color-hero-bg);
+    background-color: rgba(255, 255, 255, 0.1);
+    border-color: var(--color-accent);
 }
 
 .textarea {
@@ -84,21 +88,22 @@
 }
 
 .submitButton {
-    background-color: var(--color-hero-bg);
-    color: white;
+    background-color: var(--color-accent);
+    color: var(--color-hero-bg);
     padding: 1rem;
     border-radius: 9999px;
     font-family: var(--font-dm-sans);
     font-weight: 700;
     font-size: var(--text-body);
     margin-top: 0.5rem;
-    transition: transform 0.2s, background-color 0.2s;
+    transition: transform 0.2s, background-color 0.2s, color 0.2s;
     border: none;
     cursor: pointer;
 }
 
 .submitButton:hover {
-    background-color: black;
+    background-color: #ffffff;
+    color: var(--color-hero-bg);
     transform: translateY(-2px);
     box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.2);
 }

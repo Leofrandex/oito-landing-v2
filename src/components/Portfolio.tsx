@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, Fragment } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
     ChevronLeft, ChevronRight, TrendingUp, Clock, Target, ShieldCheck, Zap,
@@ -58,7 +58,7 @@ const cases: Case[] = [
         description: 'Sincroniza tus pagos recibidos con tu software contable para generar y enviar facturas al instante. Si un pago se atrasa, el sistema envía recordatorios amigables por WhatsApp y solo te avisa si el cliente no responde tras tres intentos.',
         kpis: [
             { label: 'Errores facturación', value: '-95%', icon: ShieldCheck },
-            { label: 'Ciclo de caja', value: '+10 días', icon: TrendingUp }
+            { label: 'mejora en el ciclo de caja', value: '10 días', icon: TrendingUp }
         ],
         workflow: [CreditCard, FileText, Bell]
     },
@@ -77,8 +77,8 @@ const cases: Case[] = [
         title: 'Generacion de contenido para redes sociales',
         description: 'Al subir un video o audio a una carpeta, la automatización genera subtítulos, extrae las 3 mejores frases para X, crea un resumen para LinkedIn y programa todo en tus redes sociales. Mantén tu marca activa en todos los canales con un solo clic.',
         kpis: [
-            { label: 'Volumen contenido', value: '+400%', icon: TrendingUp },
-            { label: 'Ahorro creación', value: '12h', icon: PenTool }
+            { label: 'volumen de contenido', value: '+400%', icon: TrendingUp },
+            { label: 'ahorradas en creacion de contenido al mes', value: '12 horas', icon: PenTool }
         ],
         workflow: [Upload, Sparkles, Share2]
     },
@@ -87,8 +87,8 @@ const cases: Case[] = [
         title: 'Prospección Inteligente 24/7',
         description: 'Captura leads de cualquier fuente, investiga automáticamente el perfil de la empresa con IA y redacta un correo de contacto personalizado. El sistema clasifica el interés del prospecto y agenda la cita en tu calendario sin que muevas un dedo.',
         kpis: [
-            { label: 'Tasa de respuesta', value: '+35%', icon: MessageCircleQuestion },
-            { label: 'Ahorro investigación', value: '15h', icon: Clock }
+            { label: 'ahorradas en investigacion al mes', value: '15 horas', icon: Clock },
+            { label: 'Tasa de respuesta', value: '+35%', icon: MessageCircleQuestion }
         ],
         workflow: [Search, Brain, CalendarCheck]
     },
@@ -97,8 +97,8 @@ const cases: Case[] = [
         title: 'Radar de Proyectos',
         description: 'La IA analiza el progreso de las tareas en tu gestor de proyectos y envía un resumen ejecutivo a tus clientes cada viernes por email. Detecta cuellos de botella y te avisa proactivamente si una fecha de entrega está en riesgo.',
         kpis: [
-            { label: 'Ahorro reportes', value: '5h', icon: Clock },
-            { label: 'Satisfacción cliente', value: '+30%', icon: Star }
+            { label: 'ahorradas en reportes al mes', value: '5 horas', icon: Clock },
+            { label: 'satisfaccion al cliente', value: '+30%', icon: Star }
         ],
         workflow: [Layout, Eye, Mail]
     },
@@ -107,7 +107,7 @@ const cases: Case[] = [
         title: 'Onboarding de Empleados en Segundos',
         description: 'Al contratar nuevo talento, el sistema crea automáticamente su correo, lo añade a los canales de comunicacion, genera su contrato digital para firma y le envía un video de bienvenida. Una experiencia profesional que elimina el caos administrativo del primer día.',
         kpis: [
-            { label: 'Tiempo admin', value: '-90%', icon: Clock },
+            { label: 'tiempo administrativo', value: '-90%', icon: Clock },
             { label: 'Cumplimiento día 1', value: '100%', icon: ShieldCheck }
         ],
         workflow: [UserPlus, FileSignature, Video]
@@ -118,7 +118,7 @@ const cases: Case[] = [
         description: 'Cada vez que recibes una opinión en Google Maps o redes sociales, la IA redacta una respuesta personalizada agradeciendo o resolviendo dudas. Si la reseña es negativa, alerta inmediatamente al gerente para salvar la relación con el cliente.',
         kpis: [
             { label: 'Reseñas respondidas', value: '100%', icon: Clock },
-            { label: 'Mejora calificación', value: '+15%', icon: Star }
+            { label: 'mejora de la calificacion', value: '+15%', icon: Star }
         ],
         workflow: [Star, PenTool, ThumbsUp]
     }
@@ -139,16 +139,7 @@ export default function Portfolio() {
         setCurrentIndex((prev) => (prev === 0 ? cases.length - 1 : prev - 1));
     };
 
-    // Auto-slide effect
-    useEffect(() => {
-        if (isPaused) return;
-
-        const timer = setInterval(() => {
-            handleNext();
-        }, 5000); // Change slide every 5 seconds
-
-        return () => clearInterval(timer);
-    }, [isPaused, currentIndex]);
+    // Auto-slide effect handled via CSS animation end event on progress bar to prevent desync
 
     // Variants for animations
     const slideVariants = {
@@ -176,7 +167,7 @@ export default function Portfolio() {
             <div className={styles.contentContainer}>
 
                 <div className={styles.sectionHeader}>
-                    <h2 className={styles.sectionTitle}>Automatiza en todas las áreas</h2>
+                    <h2 className={styles.sectionTitle}>Conoce algunos casos</h2>
                     <p className={styles.sectionDescription}>
                         Descubre cómo la IA puede transformar los procesos operativos de tu negocio.
                     </p>
@@ -195,7 +186,18 @@ export default function Portfolio() {
                         <ChevronRight size={32} />
                     </button>
 
-                    <AnimatePresence mode="popLayout" custom={direction}>
+                    <div className={styles.progressBarContainer}>
+                        <div
+                            key={currentIndex}
+                            className={styles.progressBarFill}
+                            style={{
+                                animationPlayState: isPaused ? 'paused' : 'running'
+                            }}
+                            onAnimationEnd={handleNext}
+                        />
+                    </div>
+
+                    <AnimatePresence mode="wait" custom={direction}>
                         <motion.div
                             key={currentIndex}
                             custom={direction}
@@ -207,46 +209,51 @@ export default function Portfolio() {
                                 x: { type: "spring", stiffness: 300, damping: 30 },
                                 opacity: { duration: 0.2 }
                             }}
-                            className={styles.cardContainer}
+                            className={styles.slideWrapper}
                         >
-                            {/* Header: Title & Description */}
-                            <div className={styles.cardHeader}>
-                                <h3 className={styles.cardTitle}>{cases[currentIndex].title}</h3>
-                                <p className={styles.cardDescription}>{cases[currentIndex].description}</p>
-                            </div>
-
-                            {/* Body: KPIs & Workflow */}
-                            <div className={styles.cardBody}>
-                                {/* Left: KPIs (1/3) */}
-                                <div className={styles.kpiColumn}>
-                                    {cases[currentIndex].kpis.map((kpi, index) => (
-                                        <div key={index} className={styles.kpiItem}>
-                                            <div className={styles.kpiIconWrapper}>
-                                                <kpi.icon size={28} className={styles.kpiIcon} />
-                                            </div>
-                                            <div className={styles.kpiContent}>
-                                                <span className={styles.kpiValue}>{kpi.value}</span>
-                                                <span className={styles.kpiLabel}>{kpi.label}</span>
-                                            </div>
-                                        </div>
-                                    ))}
+                            {/* Main Card Content */}
+                            <div className={styles.cardContainer}>
+                                {/* Header: Title & Description */}
+                                <div className={styles.cardHeader}>
+                                    <h3 className={styles.cardTitle}>{cases[currentIndex].title}</h3>
+                                    <p className={styles.cardDescription}>{cases[currentIndex].description}</p>
                                 </div>
 
-                                {/* Right: Workflow (2/3) */}
-                                <div className={styles.workflowColumn}>
-                                    {cases[currentIndex].workflow.map((Icon, index) => (
-                                        <div key={index} style={{ display: 'flex', alignItems: 'center' }}>
-                                            <div className={styles.workflowStep}>
-                                                <div className={styles.workflowIconBox}>
-                                                    <Icon className={styles.workflowStepIcon} />
+                                {/* Body: KPIs & Workflow */}
+                                <div className={styles.cardBody}>
+                                    {/* Left: KPIs (1/3) */}
+                                    <div className={styles.kpiColumn}>
+                                        {cases[currentIndex].kpis.map((kpi, index) => (
+                                            <div key={index} className={styles.kpiItem}>
+                                                <div className={styles.kpiIconWrapper}>
+                                                    <kpi.icon size={28} className={styles.kpiIcon} />
+                                                </div>
+                                                <div className={styles.kpiContent}>
+                                                    <span className={styles.kpiValue}>{kpi.value}</span>
+                                                    <span className={styles.kpiLabel}>{kpi.label}</span>
                                                 </div>
                                             </div>
-                                            {/* Add Arrow if not the last item */}
-                                            {index < cases[currentIndex].workflow.length - 1 && (
-                                                <ChevronRight size={32} className={styles.workflowArrow} />
-                                            )}
-                                        </div>
-                                    ))}
+                                        ))}
+                                    </div>
+
+                                    {/* Right: Workflow (2/3) */}
+                                    <div className={styles.workflowColumn}>
+                                        {cases[currentIndex].workflow.map((Icon, index) => (
+                                            <Fragment key={index}>
+                                                <div className={styles.workflowStep}>
+                                                    <div className={styles.workflowIconBox}>
+                                                        <Icon className={styles.workflowStepIcon} />
+                                                    </div>
+                                                </div>
+                                                {/* Add Arrow if not the last item */}
+                                                {index < cases[currentIndex].workflow.length - 1 && (
+                                                    <div className={styles.arrowWrapper}>
+                                                        <ChevronRight size={32} className={styles.workflowArrow} />
+                                                    </div>
+                                                )}
+                                            </Fragment>
+                                        ))}
+                                    </div>
                                 </div>
                             </div>
                         </motion.div>

@@ -2,6 +2,9 @@
 
 import { useEffect, useRef } from 'react';
 import { Renderer, Program, Mesh, Triangle, Color, Vec2 } from 'ogl';
+import gsap from 'gsap';
+import { useGSAP } from '@gsap/react';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import styles from './Threads.module.css';
 
 const vertexShader = `
@@ -132,6 +135,59 @@ interface ThreadsProps {
 const Threads = ({ color = [0.035, 0.737, 0.541], amplitude = 1, distance = 0, enableMouseInteraction = false, ...rest }: ThreadsProps) => {
     const containerRef = useRef<HTMLDivElement>(null);
     const animationFrameId = useRef<number | null>(null);
+
+    useGSAP(() => {
+        if (typeof window !== 'undefined') {
+            gsap.registerPlugin(ScrollTrigger);
+        }
+
+        const heroSection = document.getElementById('hero');
+
+        if (containerRef.current && heroSection) {
+            // Initial state: Softer gradient mask, hidden initially
+            gsap.set(containerRef.current, {
+                opacity: 0,
+                maskImage: 'linear-gradient(to right, black 0%, black 40%, transparent 60%, transparent 100%)',
+                webkitMaskImage: 'linear-gradient(to right, black 0%, black 40%, transparent 60%, transparent 100%)',
+                maskSize: '200% 100%',
+                webkitMaskSize: '200% 100%',
+                maskPosition: '100% 0',
+                webkitMaskPosition: '100% 0',
+                maskRepeat: 'no-repeat',
+                webkitMaskRepeat: 'no-repeat',
+            });
+
+            const tl = gsap.timeline({ paused: true });
+
+            ScrollTrigger.create({
+                trigger: heroSection,
+                start: 'top top',
+                end: '+=250%',
+                onUpdate: (self) => {
+                    // One-way scrub synchronization
+                    if (self.progress > tl.progress()) {
+                        gsap.to(tl, {
+                            progress: self.progress,
+                            duration: 0.5,
+                            ease: "power1.out",
+                            overwrite: true
+                        });
+                    }
+                }
+            });
+
+            // Reveal opacity immediately then animate mask
+            tl.to(containerRef.current, { opacity: 1, duration: 0.05 }, 0)
+                .to(containerRef.current, {
+                    maskPosition: '0% 0',
+                    webkitMaskPosition: '0% 0',
+                    duration: 2.5,
+                    ease: 'none'
+                }, 0)
+                // Add pause to match Hero timeline structure (reduced)
+                .to({}, { duration: 0.5 });
+        }
+    }, { scope: containerRef });
 
     useEffect(() => {
         if (!containerRef.current) return;

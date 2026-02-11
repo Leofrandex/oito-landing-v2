@@ -38,7 +38,7 @@
 
 .subtitle {
     font-family: var(--font-dm-sans);
-    font-size: var(--text-subtitle);
+    font-size: var(--text-body);
     color: var(--color-text-charcoal);
     opacity: 0.8;
     max-width: 600px;
@@ -85,12 +85,29 @@
     color: var(--color-accent);
     line-height: 1;
     font-variant-numeric: tabular-nums;
+    display: flex;
+    align-items: flex-start;
+}
+
+.currencyWrapper {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    margin-right: 0.2rem;
+    padding-top: 0.5rem;
+    /* Adjust based on font baseline */
 }
 
 .currency {
     font-size: var(--text-h2);
-    vertical-align: top;
-    margin-right: 0.2rem;
+    line-height: 1;
+}
+
+.plusSign {
+    font-size: var(--text-h2);
+    /* Match currency size */
+    line-height: 1;
+    margin-right: 2px;
 }
 
 .thermometerContainer {
@@ -103,10 +120,12 @@
 }
 
 .thermometerLabel {
-    font-family: var(--font-dongle);
-    font-size: var(--text-h2);
+    font-family: var(--font-dm-sans);
+    /* Changed from text-h2 (Dongle) to subtitle (DM Sans) to maintain visual balance */
+    font-size: var(--text-subtitle);
     line-height: 1;
     color: var(--color-hero-bg);
+    font-weight: 500;
 }
 
 /* The Layout for the bar itself */

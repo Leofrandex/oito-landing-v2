@@ -61,6 +61,50 @@
     width: 100%;
 }
 
+/* Slide Wrapper (Holds Progress Bar + Card) */
+.slideWrapper {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+}
+
+/* Progress Bar */
+.progressBarContainer {
+    position: relative;
+    width: 200px;
+    /* Smaller width */
+    height: 4px;
+    /* Thinner */
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 999px;
+    margin: 0 auto 3rem auto;
+    /* Equidistant (matches parent gap) */
+    overflow: hidden;
+    backdrop-filter: blur(5px);
+    z-index: 20;
+}
+
+.progressBarFill {
+    height: 100%;
+    background: var(--color-accent);
+    width: 0%;
+    animation: progress 7s linear forwards;
+    border-radius: 999px;
+    box-shadow: 0 0 10px var(--color-accent);
+}
+
+@keyframes progress {
+    from {
+        width: 0%;
+    }
+
+    to {
+        width: 100%;
+    }
+}
+
 /* Main Card */
 .cardContainer {
     background: rgba(255, 255, 255, 0.03);
@@ -243,11 +287,18 @@
     height: 40px;
 }
 
+
+.arrowWrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 3;
+}
+
 .workflowArrow {
     color: var(--color-accent);
     /* Green arrows */
     opacity: 0.8;
-    z-index: 3;
     background: #004346;
     /* Background for arrow to sit clearly on the line */
     border-radius: 50%;

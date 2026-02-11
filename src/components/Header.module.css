@@ -29,7 +29,7 @@
     font-family: var(--font-dongle);
     font-size: 2.5rem;
     font-weight: 700;
-    color: var(--color-hero-bg);
+    color: #09BC8A;
     line-height: 1;
     z-index: 1002;
     position: relative;

@@ -13,6 +13,7 @@ export default function Pricing() {
     const containerRef = useRef<HTMLElement>(null);
     const contentRef = useRef<HTMLDivElement>(null);
     const thermoRef = useRef<HTMLDivElement>(null);
+    const plusRef = useRef<HTMLSpanElement>(null);
 
     // Using a ref for price object so GSAP can Tween it
     const priceObj = useRef({ val: 200 });
@@ -21,6 +22,9 @@ export default function Pricing() {
 
     useGSAP(() => {
         const mm = gsap.matchMedia();
+
+        // Initial state for plus sign
+        gsap.set(plusRef.current, { opacity: 0 });
 
         mm.add("(min-width: 1024px)", () => {
             const tl = gsap.timeline({
@@ -54,12 +58,18 @@ export default function Pricing() {
                 duration: 1,
                 ease: "none"
             }, "<");
+
+            // Animate Plus Sign appearing near the end
+            tl.to(plusRef.current, {
+                opacity: 1,
+                duration: 0.2,
+                ease: "power2.out"
+            }, 0.8); // Starts at 80% of the timeline
         });
 
         // Mobile fallback
         mm.add("(max-width: 1023px)", () => {
-            gsap.to(priceObj.current, {
-                val: 2000,
+            const mobileTl = gsap.timeline({
                 scrollTrigger: {
                     trigger: containerRef.current,
                     start: "top 80%",
@@ -68,9 +78,18 @@ export default function Pricing() {
                     onUpdate: (self) => {
                         setScrollProgress(self.progress);
                     }
-                },
+                }
+            });
+
+            mobileTl.to(priceObj.current, {
+                val: 2000,
                 onUpdate: () => setDisplayPrice(Math.round(priceObj.current.val))
             });
+
+            mobileTl.to(plusRef.current, {
+                opacity: 1,
+                duration: 0.2
+            }, 0.8);
         });
 
     }, { scope: containerRef });
@@ -80,8 +99,11 @@ export default function Pricing() {
             <div ref={contentRef} className={styles.stickyContainer}>
 
                 <div className={styles.header}>
-                    <h2 className={styles.title}>Cotización: nos ajustamos a <span className={styles.highlight}>tus necesidades</span></h2>
-                    <p className={styles.subtitle}>La inversión del proyecto depende de su complejidad</p>
+                    <h2 className={styles.title}>Nos ajustamos a las necesidades de <span className={styles.highlight}>tu proyecto</span></h2>
+                    <p className={styles.subtitle}>
+                        Desarrollamos una amplia variedad de sistemas, y la inversión de tu proyecto depende de su complejidad.
+                        Con <span style={{ fontFamily: 'var(--font-dongle)', color: 'var(--color-accent)', fontSize: '1.5em', lineHeight: 0.8 }}>oito</span> puedes aprovechar al máximo tu presupuesto.
+                    </p>
                 </div>
 
                 <div className={styles.contentGrid}>
@@ -93,7 +115,10 @@ export default function Pricing() {
                     {/* Right Column: Price and Thermometer */}
                     <div className={styles.pricingControls}>
                         <div className={styles.priceDisplay}>
-                            <span className={styles.currency}>$</span>
+                            <div className={styles.currencyWrapper}>
+                                <span ref={plusRef} className={styles.plusSign}>+</span>
+                                <span className={styles.currency}>$</span>
+                            </div>
                             {displayPrice}
                         </div>
 

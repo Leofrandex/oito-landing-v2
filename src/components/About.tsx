@@ -28,6 +28,16 @@ import Globe from './Globe';
 export default function About() {
     return (
         <section id="about" className={styles.about}>
+            <motion.h2
+                className={styles.sectionTitle}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6 }}
+            >
+                Acerca de <span className={styles.brandName}>oito</span>
+            </motion.h2>
+
             <div className={styles.introSection}>
                 <motion.div
                     className={styles.imagePlaceholder}

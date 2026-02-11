@@ -1,6 +1,34 @@
 .about {
-    padding: 8rem 4rem;
-    background-color: transparent;
+    padding: 6rem 4rem;
+    margin-top: -40px;
+    /* Overlap slightly with Hero */
+    position: relative;
+    z-index: 20;
+}
+
+.about::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(244, 251, 249, 0.65);
+    border-top-left-radius: 60px;
+    border-top-right-radius: 60px;
+    z-index: -1;
+    mask-image: linear-gradient(to top, black 85%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to top, black 85%, transparent 100%);
+}
+
+.sectionTitle {
+    font-family: var(--font-dm-sans);
+    font-size: var(--text-h2);
+    color: var(--color-hero-bg);
+    text-align: center;
+    margin-bottom: 4rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
 }
 
 .introSection {
@@ -87,6 +115,16 @@
     /* Adjusted alignment for larger text */
 }
 
+.brandName {
+    font-family: var(--font-dongle);
+    color: var(--color-accent);
+    font-size: 4rem;
+    font-weight: 400;
+    line-height: 0.5;
+    position: relative;
+    top: 2px;
+}
+
 .infoArea {
     display: flex;
     flex-direction: column;
@@ -116,6 +154,18 @@
     gap: 1.5rem;
     align-items: center;
     text-align: center;
+    padding: 2rem;
+    border-radius: 24px;
+    background: rgba(255, 255, 255, 0.4);
+    box-shadow: 0 0 30px rgba(9, 188, 138, 0.15);
+    border: 1px solid rgba(9, 188, 138, 0.1);
+    transition: all 0.3s ease;
+}
+
+.column:hover {
+    box-shadow: 0 0 50px rgba(9, 188, 138, 0.25);
+    transform: translateY(-5px);
+    background: rgba(255, 255, 255, 0.6);
 }
 
 .columnTitle {
@@ -129,13 +179,18 @@
 .columnText {
     font-family: var(--font-dm-sans);
     font-size: var(--text-body);
-    color: var(--color-hero-bg);
+    color: var(--color-text-charcoal);
     line-height: 1.6;
 }
 
 @media (max-width: 768px) {
     .about {
         padding: 4rem 1.5rem;
+    }
+
+    .about::before {
+        border-top-left-radius: 40px;
+        border-top-right-radius: 40px;
     }
 
     .headline {

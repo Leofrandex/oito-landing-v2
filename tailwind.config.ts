@@ -11,7 +11,7 @@ const config: Config = {
             colors: {
                 primary: "#004346", // Deep Teal - Primary Brand Color
                 accent: "#09bc8a", // Mint - Primary Action Color
-                "accent-light": "#90E9BE", // Soft Mint - Secondary Accent
+                "accent-light": "#09bc8a", // Mint - Secondary Accent (Unified)
                 charcoal: "#333333", // Charcoal - Body Text
                 dark: "#1a1a1a", // Dark Gray - Headings
                 light: "#ffffff", // White - Background & Contrast

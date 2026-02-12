@@ -47,23 +47,48 @@ export default function Hero() {
         // Paused initially, controlled by ScrollTrigger
         const tl = gsap.timeline({ paused: true });
 
-        ScrollTrigger.create({
-            trigger: sectionRef.current,
-            start: "top top",
-            end: "+=250%",
-            pin: true,
-            anticipatePin: 1,
-            onUpdate: (self) => {
-                // One-way scrub: Only advance if scrolling forward/down beyond current progress
-                if (self.progress > tl.progress()) {
-                    gsap.to(tl, {
-                        progress: self.progress,
-                        duration: 0.5,
-                        ease: "power1.out",
-                        overwrite: true
-                    });
+        const mm = gsap.matchMedia();
+
+        // Desktop Pinning (Longer duration)
+        mm.add("(min-width: 1024px)", () => {
+            ScrollTrigger.create({
+                trigger: sectionRef.current,
+                start: "top top",
+                end: "+=250%",
+                pin: true,
+                anticipatePin: 1,
+                onUpdate: (self) => {
+                    if (self.progress > tl.progress()) {
+                        gsap.to(tl, {
+                            progress: self.progress,
+                            duration: 0.5,
+                            ease: "power1.out",
+                            overwrite: true
+                        });
+                    }
                 }
-            }
+            });
+        });
+
+        // Mobile Pinning (Shorter duration)
+        mm.add("(max-width: 1023px)", () => {
+            ScrollTrigger.create({
+                trigger: sectionRef.current,
+                start: "top top",
+                end: "+=120%", // Reduced scroll distance for mobile
+                pin: true,
+                anticipatePin: 1,
+                onUpdate: (self) => {
+                    if (self.progress > tl.progress()) {
+                        gsap.to(tl, {
+                            progress: self.progress,
+                            duration: 0.5,
+                            ease: "power1.out",
+                            overwrite: true
+                        });
+                    }
+                }
+            });
         });
 
         // Set initial states for scroll elements

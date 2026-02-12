@@ -147,6 +147,10 @@
     border-radius: 999px;
 }
 
+.dragIndicator {
+    display: none;
+}
+
 @media (max-width: 1024px) {
     .pricingSection {
         height: auto;
@@ -165,14 +169,82 @@
     }
 
     .pricingControls {
-        flex-direction: row;
+        flex-direction: row-reverse;
         align-items: center;
         justify-content: space-between;
         height: auto;
         width: 100%;
+        gap: 1rem;
     }
 
     .thermometerContainer {
-        display: none;
+        display: flex;
+        flex-direction: column-reverse;
+        flex: 1;
+        height: auto;
+        gap: 0.5rem;
+    }
+
+    .thermometerWrapper {
+        width: 100%;
+        height: 12px;
+        background-color: #e0e0e0;
+        border-radius: 999px;
+        overflow: visible;
+        /* Allow indicator to show */
+        position: relative;
+    }
+
+    .thermometerFill {
+        width: 0%;
+        height: 100%;
+        bottom: auto;
+        top: 0;
+        position: absolute;
+        left: 0;
+    }
+
+    .dragIndicator {
+        display: block;
+        position: absolute;
+        right: -12px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        background-color: var(--color-accent);
+        box-shadow: 0 0 10px var(--color-accent), 0 0 20px var(--color-accent);
+        z-index: 10;
+        animation: pulse 2s infinite ease-in-out;
+    }
+
+    @keyframes pulse {
+        0% {
+            transform: translateY(-50%) scale(1);
+            box-shadow: 0 0 10px var(--color-accent);
+        }
+
+        50% {
+            transform: translateY(-50%) scale(1.1);
+            box-shadow: 0 0 15px var(--color-accent), 0 0 25px var(--color-accent);
+        }
+
+        100% {
+            transform: translateY(-50%) scale(1);
+            box-shadow: 0 0 10px var(--color-accent);
+        }
+    }
+
+    .thermometerLabel {
+        font-size: 0.8rem;
+        text-align: left;
+        white-space: nowrap;
+    }
+
+    .priceDisplay {
+        font-size: 3.5rem;
+        min-width: 180px;
+        justify-content: flex-end;
     }
 }

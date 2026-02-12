@@ -61,7 +61,7 @@ export default function About() {
                             El tiempo no se recupera, <span className={styles.highlight}>los ingresos sí</span>
                         </h3>
                         <p className={styles.introParagraph}>
-                            En el ecosistema empresarial actual, la velocidad es una ventaja competitiva. La mayoría de los negocios están atrapados en tareas manuales, procesos fragmentados y embudos de ventas estancados, lo que impacta directamente en <span className={styles.highlight}>sus ingresos</span>.
+                            En el ecosistema empresarial actual, la velocidad es una ventaja competitiva. La mayoría de los negocios están atrapados en tareas manuales y procesos fragmentados, lo que impacta directamente en <span className={styles.highlight}>sus ingresos</span>.
                         </p>
                     </motion.div>
 
@@ -76,7 +76,7 @@ export default function About() {
                             De la operatividad manual a la <span className={styles.highlight}>escalabilidad inteligente</span>
                         </h3>
                         <p className={styles.introParagraph}>
-                            Nuestra premisa es clara: las empresas no deberian perder tiempo en tareas manuales y repetitivas. Por eso, en <span className={styles.brandHighlight}>oito</span> diseñamos sistemas inteligentes de automatización que actúan como el <span className={styles.highlight}>motor invisible</span> de tu crecimiento.
+                            Las empresas no deberían perder tiempo en tareas manuales y repetitivas. Por eso, en <span className={styles.brandHighlight}>oito</span> diseñamos sistemas inteligentes de automatización que actúan como el <span className={styles.highlight}>motor invisible</span> de tu crecimiento.
                         </p>
                     </motion.div>
 

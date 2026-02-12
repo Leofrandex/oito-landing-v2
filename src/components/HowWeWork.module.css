@@ -155,7 +155,7 @@
 
 @media (max-width: 1024px) {
     .howWeWork {
-        /* Reset any container styles if necessary */
+        padding: 4rem 1.5rem;
     }
 
     .howWeWork::before {

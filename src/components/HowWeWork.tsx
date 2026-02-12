@@ -39,6 +39,14 @@ const steps = [
 
 const HowWeWork: React.FC = () => {
     const [hoveredStep, setHoveredStep] = useState<number | null>(null);
+    const [isMobile, setIsMobile] = useState(false);
+
+    React.useEffect(() => {
+        const checkMobile = () => setIsMobile(window.innerWidth < 1024);
+        checkMobile();
+        window.addEventListener('resize', checkMobile);
+        return () => window.removeEventListener('resize', checkMobile);
+    }, []);
 
     return (
         <section id="how-we-work" className={styles.howWeWork}>
@@ -51,10 +59,11 @@ const HowWeWork: React.FC = () => {
                             className={styles.stepRow}
                             onMouseEnter={() => setHoveredStep(step.id)}
                             onMouseLeave={() => setHoveredStep(null)}
+                            onClick={() => setHoveredStep(hoveredStep === step.id ? null : step.id)} // Tap to toggle on mobile if needed, though we will force show
                         >
                             <div className={styles.leftCol}>
                                 <AnimatePresence>
-                                    {hoveredStep === step.id && (
+                                    {(isMobile || hoveredStep === step.id) && (
                                         <motion.div
                                             initial={{ opacity: 0, x: 20 }}
                                             animate={{ opacity: 1, x: 0 }}
@@ -71,7 +80,7 @@ const HowWeWork: React.FC = () => {
                                 <motion.h3
                                     className={styles.stepTitle}
                                     animate={{
-                                        fontSize: hoveredStep === step.id ? "1.5rem" : "2.5rem",
+                                        fontSize: (isMobile || hoveredStep === step.id) ? "1.5rem" : "2.5rem",
                                     }}
                                     transition={{ type: "spring", stiffness: 200, damping: 25 }}
                                 >
@@ -81,7 +90,7 @@ const HowWeWork: React.FC = () => {
 
                             <div className={styles.rightCol}>
                                 <AnimatePresence>
-                                    {hoveredStep === step.id && (
+                                    {(isMobile || hoveredStep === step.id) && (
                                         <motion.div
                                             initial={{ opacity: 0, x: -20 }}
                                             animate={{ opacity: 1, x: 0 }}

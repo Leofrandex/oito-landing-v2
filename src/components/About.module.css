@@ -111,7 +111,7 @@
     line-height: 0.8;
     font-weight: 400;
     display: inline-block;
-    transform: translateY(3px);
+    transform: translateY(2px);
     /* Adjusted alignment for larger text */
 }
 
@@ -205,5 +205,15 @@
     .columnsContainer {
         grid-template-columns: 1fr;
         gap: 3rem;
+    }
+
+    .brandName {
+        font-size: 3.5rem;
+    }
+
+    .brandHighlightLarge {
+        font-size: 3.5rem;
+        transform: translateY(4px);
+        /* Adjust alignment for larger text */
     }
 }

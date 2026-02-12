@@ -275,7 +275,7 @@ export default function Portfolio() {
                 </div>
 
                 <div className={styles.footerText}>
-                    y mucho más...
+                    Y mucho más...
                 </div>
 
             </div>

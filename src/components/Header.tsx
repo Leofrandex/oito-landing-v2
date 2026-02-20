@@ -55,7 +55,7 @@ export default function Header() {
                 <div className={`${styles.navWrapper} ${isOpen ? styles.open : ''}`}>
                     <nav className={styles.nav}>
                         <Link href="#about" className={styles.navLink} onClick={(e) => scrollToSection(e, 'about')}>Acerca de</Link>
-                        <Link href="#portfolio" className={styles.navLink} onClick={(e) => scrollToSection(e, 'portfolio')}>Trabajos</Link>
+                        <Link href="#portfolio" className={styles.navLink} onClick={(e) => scrollToSection(e, 'portfolio')}>Portafolio</Link>
                         <Link href="#how-we-work" className={styles.navLink} onClick={(e) => scrollToSection(e, 'how-we-work')}>¿Cómo trabajamos?</Link>
                         <Link href="#pricing" className={styles.navLink} onClick={(e) => scrollToSection(e, 'pricing')}>Cotizaciones</Link>
 

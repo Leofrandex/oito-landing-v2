@@ -39,10 +39,20 @@
 .subtitle {
     font-family: var(--font-dm-sans);
     font-size: var(--text-body);
-    color: var(--color-text-charcoal);
-    opacity: 0.8;
+    color: rgba(51, 51, 51, 0.8);
+    /* Replaced opacity: 0.8 to allow nested span to be fully bright */
     max-width: 600px;
     margin: 0 auto;
+}
+
+.brandHighlight {
+    font-family: var(--font-dongle);
+    color: var(--color-accent);
+    font-size: var(--text-h2);
+    line-height: 0.8;
+    font-weight: 400;
+    display: inline-block;
+    transform: translateY(1px);
 }
 
 .contentGrid {

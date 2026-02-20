@@ -159,21 +159,44 @@ const Threads = ({ color = [0.035, 0.737, 0.541], amplitude = 1, distance = 0, e
 
             const tl = gsap.timeline({ paused: true });
 
-            ScrollTrigger.create({
-                trigger: heroSection,
-                start: 'top top',
-                end: '+=250%',
-                onUpdate: (self) => {
-                    // One-way scrub synchronization
-                    if (self.progress > tl.progress()) {
-                        gsap.to(tl, {
-                            progress: self.progress,
-                            duration: 0.5,
-                            ease: "power1.out",
-                            overwrite: true
-                        });
+            const mm = gsap.matchMedia();
+
+            // Desktop Sync
+            mm.add("(min-width: 1024px)", () => {
+                ScrollTrigger.create({
+                    trigger: heroSection,
+                    start: 'top top',
+                    end: '+=150%',
+                    onUpdate: (self) => {
+                        if (self.progress > tl.progress()) {
+                            gsap.to(tl, {
+                                progress: self.progress,
+                                duration: 0.5,
+                                ease: "power1.out",
+                                overwrite: true
+                            });
+                        }
                     }
-                }
+                });
+            });
+
+            // Mobile Sync
+            mm.add("(max-width: 1023px)", () => {
+                ScrollTrigger.create({
+                    trigger: heroSection,
+                    start: 'top top',
+                    end: '+=80%',
+                    onUpdate: (self) => {
+                        if (self.progress > tl.progress()) {
+                            gsap.to(tl, {
+                                progress: self.progress,
+                                duration: 0.5,
+                                ease: "power1.out",
+                                overwrite: true
+                            });
+                        }
+                    }
+                });
             });
 
             // Reveal opacity immediately then animate mask

@@ -76,11 +76,11 @@
 }
 
 h3.heading {
-    font-family: var(--font-dongle);
-    font-size: 2rem;
-    line-height: 1;
+    font-family: var(--font-dm-sans);
+    font-size: 1.25rem;
+    line-height: 1.2;
     color: var(--color-text-light);
-    font-weight: 400;
+    font-weight: 700;
     margin-top: 0.5rem;
     /* Align deeply with Dongle baseline */
 }

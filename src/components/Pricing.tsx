@@ -136,7 +136,7 @@ export default function Pricing() {
                     <h2 className={styles.title}>Nos ajustamos a las necesidades de <span className={styles.highlight}>tu proyecto</span></h2>
                     <p className={styles.subtitle}>
                         Desarrollamos una amplia variedad de sistemas, y la inversión de tu proyecto depende de su complejidad.
-                        Con <span style={{ fontFamily: 'var(--font-dongle)', color: 'var(--color-accent)', fontSize: '1.5em', lineHeight: 0.8 }}>oito</span> puedes aprovechar al máximo tu presupuesto.
+                        Con <span className={styles.brandHighlight}>oito</span> puedes aprovechar al máximo tu presupuesto.
                     </p>
                 </div>
 

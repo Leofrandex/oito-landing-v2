@@ -76,7 +76,7 @@ export default function About() {
                             De la operatividad manual a la <span className={styles.highlight}>escalabilidad inteligente</span>
                         </h3>
                         <p className={styles.introParagraph}>
-                            Las empresas no deberían perder tiempo en tareas manuales y repetitivas. Por eso, en <span className={styles.brandHighlight}>oito</span> diseñamos sistemas inteligentes de automatización que actúan como el <span className={styles.highlight}>motor invisible</span> de tu crecimiento.
+                            Las empresas no deberían perder tiempo en labores repetitivas. Por eso, en <span className={styles.brandHighlight}>oito</span> diseñamos sistemas inteligentes de automatización que actúan como el <span className={styles.highlight}>motor invisible</span> de tu crecimiento.
                         </p>
                     </motion.div>
 

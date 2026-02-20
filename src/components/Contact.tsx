@@ -1,13 +1,91 @@
 'use client';
 
+import { useState, useRef, useEffect } from 'react';
 import { motion } from 'framer-motion';
+import { ChevronDown } from 'lucide-react';
 import styles from './Contact.module.css';
+import { sendEmail } from '@/app/actions';
+
+const countryCodes = [
+    { code: '+58', country: 'VE', name: 'Venezuela' },
+    { code: '+1', country: 'US', name: 'Estados Unidos' },
+    { code: '+52', country: 'MX', name: 'México' },
+    { code: '+54', country: 'AR', name: 'Argentina' },
+    { code: '+55', country: 'BR', name: 'Brasil' },
+    { code: '+56', country: 'CL', name: 'Chile' },
+    { code: '+57', country: 'CO', name: 'Colombia' },
+    { code: '+51', country: 'PE', name: 'Perú' },
+    { code: '+593', country: 'EC', name: 'Ecuador' },
+    { code: '+591', country: 'BO', name: 'Bolivia' },
+    { code: '+595', country: 'PY', name: 'Paraguay' },
+    { code: '+598', country: 'UY', name: 'Uruguay' },
+    { code: '+506', country: 'CR', name: 'Costa Rica' },
+    { code: '+507', country: 'PA', name: 'Panamá' },
+    { code: '+503', country: 'SV', name: 'El Salvador' },
+    { code: '+502', country: 'GT', name: 'Guatemala' },
+    { code: '+504', country: 'HN', name: 'Honduras' },
+    { code: '+505', country: 'NI', name: 'Nicaragua' },
+    { code: '+53', country: 'CU', name: 'Cuba' },
+    { code: '+1-809', country: 'DO', name: 'Rep. Dominicana' },
+    { code: '+34', country: 'ES', name: 'España' },
+    { code: '+351', country: 'PT', name: 'Portugal' },
+    { code: '+33', country: 'FR', name: 'Francia' },
+    { code: '+49', country: 'DE', name: 'Alemania' },
+    { code: '+39', country: 'IT', name: 'Italia' },
+    { code: '+44', country: 'GB', name: 'Reino Unido' },
+];
 
 export default function Contact() {
-    const handleSubmit = (e: React.FormEvent) => {
-        e.preventDefault();
-        // Simulate form submission
-        alert('Gracias por tu mensaje. Nos pondremos en contacto pronto.');
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [status, setStatus] = useState<{ type: 'success' | 'error', message: string } | null>(null);
+    const [selectedCode, setSelectedCode] = useState(countryCodes[0]);
+    const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+    const dropdownRef = useRef<HTMLDivElement>(null);
+
+    // Close dropdown when clicking outside
+    useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+            if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+                setIsDropdownOpen(false);
+            }
+        };
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => document.removeEventListener('mousedown', handleClickOutside);
+    }, []);
+
+    const handleSubmit = async (formData: FormData) => {
+        setIsSubmitting(true);
+        setStatus(null);
+
+        // Prepend country code to phone
+        const rawPhone = formData.get('phone') as string;
+        if (rawPhone) {
+            formData.set('phone', `${selectedCode.code} ${rawPhone}`);
+        }
+
+        try {
+            const result = await sendEmail(formData);
+
+            if (result.success) {
+                setStatus({
+                    type: 'success',
+                    message: '¡Gracias! Tu mensaje ha sido enviado. Nos pondremos en contacto pronto.'
+                });
+                (document.getElementById('contact-form') as HTMLFormElement)?.reset();
+            } else {
+                setStatus({
+                    type: 'error',
+                    message: result.error || 'Hubo un error al enviar el mensaje.'
+                });
+            }
+        } catch (error) {
+            setStatus({
+                type: 'error',
+                message: 'Ocurrió un error inesperado.'
+            });
+        } finally {
+            setIsSubmitting(false);
+        }
     };
 
     return (
@@ -21,9 +99,11 @@ export default function Contact() {
             >
                 <h2 className={styles.headline}>
                     <span className={styles.brandWord}>oitomatiza</span>
-                    <br />
                     con nosotros
                 </h2>
+                <p className={styles.description}>
+                    ¿Listo para transformar tu negocio? Contáctanos para descubrir cómo nuestros servicios pueden elevar tu potencial y optimizar tus resultados. Agenda tu cita y da el primer paso hacia el futuro.
+                </p>
             </motion.div>
 
             <motion.div
@@ -33,28 +113,106 @@ export default function Contact() {
                 viewport={{ once: true, margin: "-50px" }}
                 transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
             >
-                <form className={styles.form} onSubmit={handleSubmit}>
+                <form id="contact-form" className={styles.form} action={handleSubmit}>
                     <div className={styles.inputGroup}>
-                        <label htmlFor="name" className={styles.label}>Nombre completo</label>
-                        <input type="text" id="name" className={styles.input} required placeholder="Tu nombre" />
+                        <label htmlFor="name" className={styles.label}>Nombre completo o nombre de la empresa</label>
+                        <input
+                            type="text"
+                            id="name"
+                            name="name"
+                            className={styles.input}
+                            required
+                            placeholder="Tu nombre o el de tu empresa"
+                        />
                     </div>
 
                     <div className={styles.inputGroup}>
                         <label htmlFor="email" className={styles.label}>Correo electrónico</label>
-                        <input type="email" id="email" className={styles.input} required placeholder="nombre@empresa.com" />
+                        <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            className={styles.input}
+                            required
+                            placeholder="nombre@empresa.com"
+                        />
                     </div>
 
                     <div className={styles.inputGroup}>
                         <label htmlFor="phone" className={styles.label}>Teléfono</label>
-                        <input type="tel" id="phone" className={styles.input} placeholder="+1 234 567 890" />
+                        <div className={styles.phoneRow}>
+                            <div className={styles.countryCodeWrapper} ref={dropdownRef}>
+                                <button
+                                    type="button"
+                                    className={styles.countryCodeButton}
+                                    onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+                                    aria-haspopup="listbox"
+                                    aria-expanded={isDropdownOpen}
+                                >
+                                    <span className={styles.countryFlag}>{selectedCode.country}</span>
+                                    <span className={styles.countryCodeText}>{selectedCode.code}</span>
+                                    <ChevronDown
+                                        size={14}
+                                        className={`${styles.dropdownChevron} ${isDropdownOpen ? styles.dropdownChevronOpen : ''}`}
+                                    />
+                                </button>
+
+                                {isDropdownOpen && (
+                                    <ul className={styles.dropdownMenu} role="listbox">
+                                        {countryCodes.map((item) => (
+                                            <li
+                                                key={item.code + item.country}
+                                                role="option"
+                                                aria-selected={selectedCode.code === item.code}
+                                                className={`${styles.dropdownItem} ${selectedCode.code === item.code ? styles.dropdownItemActive : ''}`}
+                                                onClick={() => {
+                                                    setSelectedCode(item);
+                                                    setIsDropdownOpen(false);
+                                                }}
+                                            >
+                                                <span className={styles.dropdownCountry}>{item.country}</span>
+                                                <span className={styles.dropdownName}>{item.name}</span>
+                                                <span className={styles.dropdownCode}>{item.code}</span>
+                                            </li>
+                                        ))}
+                                    </ul>
+                                )}
+                            </div>
+                            <input
+                                type="tel"
+                                id="phone"
+                                name="phone"
+                                className={`${styles.input} ${styles.phoneInput}`}
+                                placeholder="412 123 4567"
+                            />
+                        </div>
                     </div>
 
                     <div className={styles.inputGroup}>
                         <label htmlFor="message" className={styles.label}>¿Qué tienes en mente?</label>
-                        <textarea id="message" className={styles.textarea} required placeholder="Cuéntanos brevemente sobre tu proyecto o necesidades..."></textarea>
+                        <textarea
+                            id="message"
+                            name="message"
+                            className={styles.textarea}
+                            required
+                            placeholder="Cuéntanos brevemente sobre tu proyecto o necesidades..."
+                        ></textarea>
                     </div>
 
-                    <button type="submit" className={styles.submitButton}>Enviar Solicitud</button>
+                    <button
+                        type="submit"
+                        disabled={isSubmitting}
+                        className={styles.submitButton}
+                        style={{ opacity: isSubmitting ? 0.7 : 1, cursor: isSubmitting ? 'not-allowed' : 'pointer' }}
+                    >
+                        {isSubmitting ? 'Enviando...' : 'Enviar Solicitud'}
+                    </button>
+
+                    {status && (
+                        <div className={status.type === 'success' ? styles.successMessage : styles.errorMessage}>
+                            {status.message}
+                        </div>
+                    )}
                 </form>
             </motion.div>
         </section>

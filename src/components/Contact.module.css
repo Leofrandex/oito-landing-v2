@@ -15,17 +15,31 @@
 
 .headline {
     font-family: var(--font-dm-sans);
-    font-size: var(--text-h1);
-    line-height: 0.8;
+    font-size: var(--text-h2);
     color: var(--color-hero-bg);
+    margin-bottom: 1rem;
+    font-weight: 700;
 }
 
 .brandWord {
     font-family: var(--font-dongle);
-    font-size: 1.3em;
+    font-size: 1.5em;
     line-height: 0.8;
     font-weight: 400;
+    color: var(--color-accent);
     display: block;
+    margin-bottom: 0.2rem;
+}
+
+.description {
+    font-family: var(--font-dm-sans);
+    font-size: var(--text-body);
+    color: var(--color-hero-bg);
+    opacity: 0.85;
+    margin-top: 1.5rem;
+    line-height: 1.6;
+    max-width: 95%;
+    font-weight: 400;
 }
 
 .formContainer {
@@ -87,6 +101,153 @@
     resize: vertical;
 }
 
+/* ===== Phone Row with Country Code ===== */
+.phoneRow {
+    display: flex;
+    gap: 0.5rem;
+    align-items: stretch;
+}
+
+.phoneInput {
+    flex: 1;
+    min-width: 0;
+}
+
+.countryCodeWrapper {
+    position: relative;
+    flex-shrink: 0;
+}
+
+.countryCodeButton {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    background-color: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 0.75rem 0.75rem;
+    color: var(--color-text-light);
+    font-family: var(--font-dm-sans);
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    height: 100%;
+    white-space: nowrap;
+}
+
+.countryCodeButton:hover {
+    background-color: rgba(255, 255, 255, 0.12);
+    border-color: var(--color-accent);
+}
+
+.countryFlag {
+    font-size: 0.8rem;
+    opacity: 0.7;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+}
+
+.countryCodeText {
+    font-weight: 500;
+}
+
+.dropdownChevron {
+    opacity: 0.6;
+    transition: transform 0.2s ease;
+    flex-shrink: 0;
+}
+
+.dropdownChevronOpen {
+    transform: rotate(180deg);
+}
+
+/* ===== Dropdown Menu ===== */
+.dropdownMenu {
+    position: absolute;
+    top: calc(100% + 4px);
+    left: 0;
+    z-index: 100;
+    min-width: 240px;
+    max-height: 240px;
+    overflow-y: auto;
+    background-color: #003638;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 14px;
+    padding: 0.35rem;
+    list-style: none;
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4);
+    animation: dropdownFadeIn 0.15s ease-out;
+}
+
+@keyframes dropdownFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-6px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Custom scrollbar for dropdown */
+.dropdownMenu::-webkit-scrollbar {
+    width: 5px;
+}
+
+.dropdownMenu::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.dropdownMenu::-webkit-scrollbar-thumb {
+    background-color: rgba(255, 255, 255, 0.15);
+    border-radius: 10px;
+}
+
+.dropdownItem {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.6rem 0.75rem;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.15s;
+    font-family: var(--font-dm-sans);
+    font-size: 0.9rem;
+    color: var(--color-text-light);
+}
+
+.dropdownItem:hover {
+    background-color: rgba(9, 188, 138, 0.15);
+}
+
+.dropdownItemActive {
+    background-color: rgba(9, 188, 138, 0.2);
+}
+
+.dropdownCountry {
+    font-size: 0.75rem;
+    font-weight: 600;
+    opacity: 0.6;
+    min-width: 1.6rem;
+    letter-spacing: 0.02em;
+}
+
+.dropdownName {
+    flex: 1;
+    font-weight: 400;
+    opacity: 0.9;
+}
+
+.dropdownCode {
+    font-weight: 600;
+    opacity: 0.7;
+    font-size: 0.85rem;
+    margin-left: auto;
+}
+
+/* ===== Submit Button ===== */
 .submitButton {
     background-color: var(--color-accent);
     color: var(--color-hero-bg);
@@ -108,12 +269,37 @@
     box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.2);
 }
 
+/* ===== Messages ===== */
+.successMessage {
+    background-color: rgba(9, 188, 138, 0.2);
+    border: 1px solid var(--color-accent);
+    color: var(--color-accent);
+    padding: 1rem;
+    border-radius: 12px;
+    text-align: center;
+    margin-top: 1rem;
+    font-family: var(--font-dm-sans);
+}
+
+.errorMessage {
+    background-color: rgba(255, 99, 71, 0.2);
+    border: 1px solid tomato;
+    color: tomato;
+    padding: 1rem;
+    border-radius: 12px;
+    text-align: center;
+    margin-top: 1rem;
+    font-family: var(--font-dm-sans);
+}
+
+/* ===== Responsive ===== */
 @media (max-width: 900px) {
     .contact {
         grid-template-columns: 1fr;
         padding: 4rem 1.5rem;
         gap: 3rem;
         text-align: center;
+        overflow: hidden;
     }
 
     .headlineContainer {
@@ -128,8 +314,7 @@
         box-sizing: border-box;
     }
 
-    .contact {
-        overflow: hidden;
-        /* Prevent spillover */
+    .dropdownMenu {
+        min-width: 200px;
     }
 }

@@ -189,7 +189,7 @@ export default function Portfolio() {
                     <div className={styles.progressBarContainer}>
                         <div
                             key={currentIndex}
-                            className={styles.progressBarFill}
+                            className={`${styles.progressBarFill} ${isPaused ? styles.progressBarPaused : ''}`}
                             style={{
                                 animationPlayState: isPaused ? 'paused' : 'running'
                             }}

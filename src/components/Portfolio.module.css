@@ -93,6 +93,16 @@
     animation: progress 7s linear forwards;
     border-radius: 999px;
     box-shadow: 0 0 10px var(--color-accent);
+    transition: box-shadow 0.4s ease, filter 0.4s ease;
+}
+
+.progressBarPaused {
+    box-shadow:
+        0 0 10px 2px #fff,
+        0 0 25px 8px var(--color-accent),
+        0 0 60px 20px var(--color-accent),
+        0 0 100px 30px var(--color-accent) !important;
+    filter: brightness(1.5);
 }
 
 @keyframes progress {

@@ -54,7 +54,7 @@ export default function Hero() {
             ScrollTrigger.create({
                 trigger: sectionRef.current,
                 start: "top top",
-                end: "+=250%",
+                end: "+=150%",
                 pin: true,
                 anticipatePin: 1,
                 onUpdate: (self) => {
@@ -75,7 +75,7 @@ export default function Hero() {
             ScrollTrigger.create({
                 trigger: sectionRef.current,
                 start: "top top",
-                end: "+=120%", // Reduced scroll distance for mobile
+                end: "+=80%", // Reduced scroll distance for mobile
                 pin: true,
                 anticipatePin: 1,
                 onUpdate: (self) => {
@@ -120,7 +120,7 @@ export default function Hero() {
                     <span className={styles.mainText} ref={mainTextRef}>LO HACE POR TI</span>
                 </h1>
                 <p className={styles.description} ref={descriptionRef}>
-                    Diseñamos sistemas inteligentes de automatización para elevar la productividad de tu negocio
+                    Diseñamos sistemas inteligentes de IA para elevar la productividad de tu negocio
                 </p>
                 <button
                     type="button"

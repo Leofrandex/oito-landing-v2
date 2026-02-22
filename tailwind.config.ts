@@ -19,7 +19,7 @@ const config: Config = {
             },
             fontFamily: {
                 sans: ["var(--font-dm-sans)", "sans-serif"],
-                display: ["var(--font-dongle)", "sans-serif"],
+                display: ["var(--font-varela-round)", "sans-serif"],
                 serif: ["var(--font-serif)", "serif"],
             },
         },

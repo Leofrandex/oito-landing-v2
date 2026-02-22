@@ -22,9 +22,9 @@
 }
 
 .brandWord {
-    font-family: var(--font-dongle);
-    font-size: 1.5em;
-    line-height: 0.8;
+    font-family: var(--font-varela-round);
+    font-size: 1.25em;
+    line-height: 1;
     font-weight: 400;
     color: var(--color-accent);
     display: block;

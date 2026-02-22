@@ -1,13 +1,13 @@
 import type { Metadata } from "next";
-import { Dongle, DM_Sans, Playfair_Display } from "next/font/google";
+import { Varela_Round, DM_Sans, Playfair_Display } from "next/font/google";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import "./globals.css";
 
-const dongle = Dongle({
-  weight: ["300", "400", "700"],
+const varelaRound = Varela_Round({
+  weight: ["400"],
   subsets: ["latin"],
-  variable: "--font-dongle",
+  variable: "--font-varela-round",
 });
 
 const dmSans = DM_Sans({
@@ -32,7 +32,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="es">
-      <body className={`${dongle.variable} ${dmSans.variable} ${playfair.variable} antialiased`}>
+      <body className={`${varelaRound.variable} ${dmSans.variable} ${playfair.variable} antialiased`}>
         {children}
         <Analytics />
         <SpeedInsights />

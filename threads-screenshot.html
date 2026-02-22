@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Threads A4 Exact Port</title>
+    <title>Threads 1200x2000 Exact Port</title>
     <style>
         body,
         html {
@@ -23,8 +23,8 @@
         }
 
         #container {
-            width: 210mm;
-            height: 297mm;
+            width: 1200px;
+            height: 2000px;
             background: rgba(0, 67, 70, 0.5);
             /* Optional: semi-transparent teal just for preview */
             position: relative;
@@ -76,13 +76,13 @@
 
 <body>
     <div class="desc">
-        <strong>Exact Threads Port (A4)</strong><br>
+        <strong>Exact Threads Port (1200x2000)</strong><br>
         Ported directly from <code>Threads.tsx</code>.<br>
         Background: Transparent.<br>
-        Format: 210mm x 297mm.
+        Format: 1200px x 2000px.
     </div>
     <div id="container"></div>
-    <button id="downloadBtn">Download A4 Transparent PNG</button>
+    <button id="downloadBtn">Download 1200x2000 Transparent PNG</button>
 
     <script type="module">
         import { Renderer, Program, Mesh, Triangle, Color, Vec2 } from 'https://cdn.skypack.dev/ogl';
@@ -225,9 +225,9 @@
         const mesh = new Mesh(gl, { geometry, program });
 
         function resize() {
-            // High Resolution: 3x the CSS size for a very crisp print asset
-            const width = container.clientWidth * 3;
-            const height = container.clientHeight * 3;
+            // Exact dimensions: 1200x2000 pixel
+            const width = container.clientWidth;
+            const height = container.clientHeight;
             renderer.setSize(width, height);
             program.uniforms.iResolution.value.r = width;
             program.uniforms.iResolution.value.g = height;
@@ -246,7 +246,7 @@
         document.getElementById('downloadBtn').onclick = () => {
             const link = document.createElement('a');
             link.timestamp = new Date().getTime();
-            link.download = `threads_A4_v3_${link.timestamp}.png`;
+            link.download = `threads_1200x2000_${link.timestamp}.png`;
             link.href = gl.canvas.toDataURL('image/png');
             link.click();
         };

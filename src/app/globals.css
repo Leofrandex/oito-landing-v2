@@ -22,7 +22,7 @@
     --text-body: 1.125rem;
     /* Mobile: 1rem */
 
-    --font-dongle: var(--font-dongle);
+    --font-varela-round: var(--font-varela-round);
     --font-dm-sans: var(--font-dm-sans);
 }
 
@@ -59,7 +59,7 @@ h3,
 h4,
 h5,
 h6 {
-    font-family: var(--font-dongle), sans-serif;
+    font-family: var(--font-varela-round), sans-serif;
     line-height: 1.1;
 }
 

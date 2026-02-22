@@ -39,13 +39,12 @@
 }
 
 .oitoText {
-    font-family: var(--font-dongle);
+    font-family: var(--font-varela-round);
     color: #09BC8A;
     text-transform: lowercase;
     font-weight: 400;
-    font-size: calc(var(--text-h1) * 2);
-    /* Keep WOW size but adjust alignment */
-    line-height: 0.8;
+    font-size: calc(var(--text-h1) * 1.5);
+    line-height: 1;
 }
 
 .mainText {
@@ -72,17 +71,13 @@
 .ctaButton {
     background-color: var(--color-hero-bg);
     color: var(--color-text-light);
-    padding: 0.8rem 3.5rem;
-    /* Adjusted vertical padding for larger text */
+    padding: 0.8rem 2.5rem;
     border-radius: 9999px;
-    font-family: var(--font-dongle);
+    font-family: var(--font-varela-round);
     font-weight: 400;
-    /* Dongle is bold enough */
-    font-size: 2.5rem;
-    line-height: 0.8;
+    font-size: var(--text-subtitle);
+    line-height: 1;
     text-transform: lowercase;
-    padding-bottom: 0.6rem;
-    /* Visual adjustment for Dongle baseline */
     width: fit-content;
     transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     /* Bouncy transition */
@@ -109,8 +104,7 @@
     }
 
     .oitoText {
-        font-size: 6rem;
-        /* Smaller than calc(h1 * 2) for mobile */
+        font-size: 4.5rem;
     }
 }
 
@@ -124,8 +118,8 @@
     }
 
     .ctaButton {
-        padding: 0.8rem 2rem;
-        font-size: 2rem;
+        padding: 0.8rem 1.5rem;
+        font-size: var(--text-body);
         width: 100%;
         max-width: 300px;
     }
@@ -146,9 +140,8 @@
 }
 
 .scrollText {
-    font-family: var(--font-dongle);
-    font-size: 1.5rem;
-    /* Revert to 1.5rem */
+    font-family: var(--font-varela-round);
+    font-size: var(--text-body);
     color: var(--color-text-charcoal);
     text-transform: uppercase;
     /* Revert to uppercase */

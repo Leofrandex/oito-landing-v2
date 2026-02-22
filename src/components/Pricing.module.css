@@ -46,13 +46,12 @@
 }
 
 .brandHighlight {
-    font-family: var(--font-dongle);
+    font-family: var(--font-varela-round);
     color: var(--color-accent);
-    font-size: var(--text-h2);
-    line-height: 0.8;
+    font-size: 1.25em;
+    line-height: inherit;
     font-weight: 400;
     display: inline-block;
-    transform: translateY(1px);
 }
 
 .contentGrid {

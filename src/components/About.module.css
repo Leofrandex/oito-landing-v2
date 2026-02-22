@@ -92,37 +92,30 @@
 }
 
 .brandHighlight {
-    font-family: var(--font-dongle);
+    font-family: var(--font-varela-round);
     color: var(--color-accent);
-    font-size: var(--text-h2);
-    /* Adjusted for Dongle's scale */
-    line-height: 0.8;
+    font-size: 1.25em;
+    line-height: inherit;
     font-weight: 400;
     display: inline-block;
-    transform: translateY(1px);
-    /* Vertical align adjustment */
 }
 
 .brandHighlightLarge {
-    font-family: var(--font-dongle);
+    font-family: var(--font-varela-round);
     color: var(--color-accent);
-    font-size: var(--text-h1);
-    /* Larger for titles */
-    line-height: 0.8;
+    font-size: 1.25em;
+    line-height: inherit;
     font-weight: 400;
     display: inline-block;
-    transform: translateY(2px);
-    /* Adjusted alignment for larger text */
 }
 
 .brandName {
-    font-family: var(--font-dongle);
+    font-family: var(--font-varela-round);
     color: var(--color-accent);
-    font-size: 4rem;
+    font-size: 1.25em;
     font-weight: 400;
-    line-height: 0.5;
+    line-height: 1;
     position: relative;
-    top: 2px;
 }
 
 .infoArea {
@@ -205,15 +198,5 @@
     .columnsContainer {
         grid-template-columns: 1fr;
         gap: 3rem;
-    }
-
-    .brandName {
-        font-size: 3.5rem;
-    }
-
-    .brandHighlightLarge {
-        font-size: 3.5rem;
-        transform: translateY(4px);
-        /* Adjust alignment for larger text */
     }
 }

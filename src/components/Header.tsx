@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import styles from './Header.module.css';
 
 export default function Header() {
@@ -39,7 +40,9 @@ export default function Header() {
         <header className={`${styles.header} ${scrolled ? styles.scrolled : ''}`}>
             <div className={styles.container}>
                 <div className={styles.logo}>
-                    <Link href="#hero" onClick={(e) => scrollToSection(e, 'hero')}>oito</Link>
+                    <Link href="#hero" onClick={(e) => scrollToSection(e, 'hero')}>
+                        <Image src="/oito_logo_2.png" alt="oito" width={75} height={35} className={styles.logoImage} priority />
+                    </Link>
                 </div>
 
                 <button

@@ -219,10 +219,9 @@
 }
 
 .kpiValue {
-    font-family: var(--font-dongle);
-    font-size: 2.5rem;
-    /* Large value */
-    line-height: 0.9;
+    font-family: var(--font-varela-round);
+    font-size: var(--text-subtitle);
+    line-height: 1;
     font-weight: 700;
     color: #fff;
 }
@@ -486,7 +485,7 @@
     }
 
     .kpiValue {
-        font-size: 1.8rem;
+        font-size: var(--text-body);
     }
 
     .kpiLabel {

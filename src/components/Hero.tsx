@@ -117,6 +117,7 @@ export default function Hero() {
             <div className={styles.content} ref={contentRef}>
                 <h1 className={styles.headline}>
                     <span className={styles.oitoText} ref={oitoTextRef}>oito</span>
+                    <span className="sr-only"> </span>
                     <span className={styles.mainText} ref={mainTextRef}>LO HACE POR TI</span>
                 </h1>
                 <p className={styles.description} ref={descriptionRef}>

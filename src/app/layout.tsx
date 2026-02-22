@@ -21,7 +21,7 @@ const playfair = Playfair_Display({
 });
 
 export const metadata: Metadata = {
-  title: "oito | Agencia de Automatización",
+  title: "oito | Automatización con IA",
   description: "Aumenta la productividad de tu empresa con automatización inteligente.",
 };
 

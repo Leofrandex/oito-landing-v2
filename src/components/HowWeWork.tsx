@@ -51,7 +51,12 @@ const HowWeWork: React.FC = () => {
     return (
         <section id="how-we-work" className={styles.howWeWork}>
             <div className={styles.container}>
-                <h2 className={styles.sectionTitle}>Metodología <span className={styles.brandHighlight}>oito</span>: el camino para un sistema inteligente exitoso para tu negocio</h2>
+                <h2 className={styles.sectionTitle}>
+                    Metodología <span className={styles.brandHighlight}>oito</span>
+                </h2>
+                <p className={styles.sectionDescription}>
+                    Conoce nuestra forma de trabajar. La metodología oito es el motor definitivo para estructurar, desplegar y escalar un sistema de Inteligencia Artificial que revolucione los resultados de tu negocio.
+                </p>
                 <div className={styles.stepsContainer}>
                     {steps.map((step) => (
                         <div

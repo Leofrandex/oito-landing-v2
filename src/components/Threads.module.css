@@ -9,3 +9,13 @@
     background-color: var(--color-bg);
     /* Allow clicks to pass through unless interaction is needed */
 }
+
+.threads-container canvas {
+    opacity: 0.5;
+}
+
+@media (max-width: 768px) {
+    .threads-container canvas {
+        opacity: 0.25;
+    }
+}

@@ -4,7 +4,6 @@ import { useEffect, useRef } from 'react';
 import { Renderer, Program, Mesh, Triangle, Color, Vec2 } from 'ogl';
 import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import styles from './Threads.module.css';
 
 const vertexShader = `
@@ -129,26 +128,23 @@ interface ThreadsProps {
     amplitude?: number;
     distance?: number;
     enableMouseInteraction?: boolean;
+    isLoaded?: boolean;
     [key: string]: any;
 }
 
-const Threads = ({ color = [0.035, 0.737, 0.541], amplitude = 1, distance = 0, enableMouseInteraction = false, ...rest }: ThreadsProps) => {
+const Threads = ({ color = [0.035, 0.737, 0.541], amplitude = 1, distance = 0, enableMouseInteraction = false, isLoaded = true, ...rest }: ThreadsProps) => {
     const containerRef = useRef<HTMLDivElement>(null);
     const animationFrameId = useRef<number | null>(null);
 
     useGSAP(() => {
-        if (typeof window !== 'undefined') {
-            gsap.registerPlugin(ScrollTrigger);
-        }
-
         const heroSection = document.getElementById('hero');
 
         if (containerRef.current && heroSection) {
-            // Initial state: Softer gradient mask, hidden initially
+            // Initial state: hidden
             gsap.set(containerRef.current, {
                 opacity: 0,
-                maskImage: 'linear-gradient(to right, black 0%, black 40%, transparent 60%, transparent 100%)',
-                webkitMaskImage: 'linear-gradient(to right, black 0%, black 40%, transparent 60%, transparent 100%)',
+                maskImage: 'linear-gradient(to right, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 40%, rgba(0,0,0,0) 60%, rgba(0,0,0,0) 100%)',
+                webkitMaskImage: 'linear-gradient(to right, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 40%, rgba(0,0,0,0) 60%, rgba(0,0,0,0) 100%)',
                 maskSize: '200% 100%',
                 webkitMaskSize: '200% 100%',
                 maskPosition: '100% 0',
@@ -157,60 +153,21 @@ const Threads = ({ color = [0.035, 0.737, 0.541], amplitude = 1, distance = 0, e
                 webkitMaskRepeat: 'no-repeat',
             });
 
-            const tl = gsap.timeline({ paused: true });
+            if (!isLoaded) return;
 
-            const mm = gsap.matchMedia();
-
-            // Desktop Sync
-            mm.add("(min-width: 1024px)", () => {
-                ScrollTrigger.create({
-                    trigger: heroSection,
-                    start: 'top top',
-                    end: '+=150%',
-                    onUpdate: (self) => {
-                        if (self.progress > tl.progress()) {
-                            gsap.to(tl, {
-                                progress: self.progress,
-                                duration: 0.5,
-                                ease: "power1.out",
-                                overwrite: true
-                            });
-                        }
-                    }
-                });
-            });
-
-            // Mobile Sync
-            mm.add("(max-width: 1023px)", () => {
-                ScrollTrigger.create({
-                    trigger: heroSection,
-                    start: 'top top',
-                    end: '+=80%',
-                    onUpdate: (self) => {
-                        if (self.progress > tl.progress()) {
-                            gsap.to(tl, {
-                                progress: self.progress,
-                                duration: 0.5,
-                                ease: "power1.out",
-                                overwrite: true
-                            });
-                        }
-                    }
-                });
-            });
+            // Timed animation instead of scrolling
+            const tl = gsap.timeline({ delay: 0.5 });
 
             // Reveal opacity immediately then animate mask
             tl.to(containerRef.current, { opacity: 1, duration: 0.05 }, 0)
                 .to(containerRef.current, {
                     maskPosition: '0% 0',
                     webkitMaskPosition: '0% 0',
-                    duration: 2.5,
-                    ease: 'none'
-                }, 0)
-                // Add pause to match Hero timeline structure (reduced)
-                .to({}, { duration: 0.5 });
+                    duration: 3, // slightly slower for cinematic feel
+                    ease: 'power2.inOut'
+                }, 0);
         }
-    }, { scope: containerRef });
+    }, { scope: containerRef, dependencies: [isLoaded] });
 
     useEffect(() => {
         if (!containerRef.current) return;
@@ -299,7 +256,7 @@ const Threads = ({ color = [0.035, 0.737, 0.541], amplitude = 1, distance = 0, e
         };
     }, [color, amplitude, distance, enableMouseInteraction]);
 
-    return <div ref={containerRef} className={styles['threads-container']} {...rest} />;
+    return <div ref={containerRef} className={styles['threads-container']} style={{ opacity: 0 }} {...rest} />;
 };
 
 export default Threads;

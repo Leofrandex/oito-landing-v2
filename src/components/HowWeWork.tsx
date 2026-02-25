@@ -40,6 +40,7 @@ const steps = [
 const HowWeWork: React.FC = () => {
     const [hoveredStep, setHoveredStep] = useState<number | null>(null);
     const [isMobile, setIsMobile] = useState(false);
+    const [secondsOnline, setSecondsOnline] = useState(0);
 
     React.useEffect(() => {
         const checkMobile = () => setIsMobile(window.innerWidth < 1024);
@@ -48,6 +49,19 @@ const HowWeWork: React.FC = () => {
         return () => window.removeEventListener('resize', checkMobile);
     }, []);
 
+    React.useEffect(() => {
+        const updateTime = () => {
+            setSecondsOnline(Math.floor(performance.now() / 1000));
+        };
+        updateTime();
+        const interval = setInterval(updateTime, 1000);
+        return () => clearInterval(interval);
+    }, []);
+
+    const leadsCalificados = Math.floor(secondsOnline / 3.5);
+    const propuestasEnviadas = Math.floor(secondsOnline / 20);
+    const facturasValidadas = Math.floor(secondsOnline / 14);
+
     return (
         <section id="how-we-work" className={styles.howWeWork}>
             <div className={styles.container}>
@@ -55,8 +69,10 @@ const HowWeWork: React.FC = () => {
                     Metodología <span className={styles.brandHighlight}>oito</span>
                 </h2>
                 <p className={styles.sectionDescription}>
-                    Conoce nuestra forma de trabajar. La metodología oito es el motor definitivo para estructurar, desplegar y escalar un sistema de Inteligencia Artificial que revolucione los resultados de tu negocio.
+                    Conoce nuestra forma de trabajar. La metodología <span className={styles.brandHighlight}>oito</span> es el motor definitivo para estructurar, desplegar y escalar un sistema de Inteligencia Artificial que revolucione los resultados de tu negocio.
                 </p>
+
+
                 <div className={styles.stepsContainer}>
                     {steps.map((step) => (
                         <div
@@ -109,6 +125,29 @@ const HowWeWork: React.FC = () => {
                             </div>
                         </div>
                     ))}
+                </div>
+
+                <div className={styles.metricsContainer}>
+                    <p className={styles.metricsIntro}>
+                        En los <span className={styles.timeCounter}>{secondsOnline}</span> segundos que llevas leyendo esta página, <span className={styles.brandHighlight}>oito</span> podría haber:
+                    </p>
+                    <div className={styles.metricsGrid}>
+                        <div className={styles.metricColumn}>
+                            <span className={styles.metricVerb}>calificado</span>
+                            <span className={styles.metricNumber}>{leadsCalificados}</span>
+                            <span className={styles.metricNoun}>leads</span>
+                        </div>
+                        <div className={styles.metricColumn}>
+                            <span className={styles.metricVerb}>enviado</span>
+                            <span className={styles.metricNumber}>{propuestasEnviadas}</span>
+                            <span className={styles.metricNoun}>propuestas</span>
+                        </div>
+                        <div className={styles.metricColumn}>
+                            <span className={styles.metricVerb}>validado</span>
+                            <span className={styles.metricNumber}>{facturasValidadas}</span>
+                            <span className={styles.metricNoun}>facturas</span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>

@@ -5,180 +5,132 @@ import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import styles from './Pricing.module.css';
-import WorkflowAnimation from './WorkflowAnimation';
+import { ChevronRight, Hourglass, TrendingUp, DollarSign } from 'lucide-react';
 
-gsap.registerPlugin(ScrollTrigger);
+if (typeof window !== 'undefined') {
+    gsap.registerPlugin(ScrollTrigger);
+}
 
 export default function Pricing() {
-    const containerRef = useRef<HTMLElement>(null);
-    const contentRef = useRef<HTMLDivElement>(null);
-    const thermoRef = useRef<HTMLDivElement>(null);
-    const trackRef = useRef<HTMLDivElement>(null);
-    const plusRef = useRef<HTMLSpanElement>(null);
+    const wrapperRef = useRef<HTMLDivElement>(null);
+    const calculatorRef = useRef<HTMLDivElement>(null);
 
-    // Using a ref for price object so GSAP can Tween it
-    const priceObj = useRef({ val: 100 });
-    const [displayPrice, setDisplayPrice] = useState(100);
-    const [scrollProgress, setScrollProgress] = useState(0);
+    const [teamSize, setTeamSize] = useState(5);
+    const [hoursPerPerson, setHoursPerPerson] = useState(8);
 
-    const isDragging = useRef(false);
-
-    const handleMobileInteraction = (clientX: number) => {
-        if (!trackRef.current || window.innerWidth >= 1024) return;
-
-        const rect = trackRef.current.getBoundingClientRect();
-        let progress = (clientX - rect.left) / rect.width;
-        progress = Math.max(0, Math.min(1, progress));
-
-        setScrollProgress(progress);
-
-        // Update visuals
-        // 1. Price (Power2.in approximation: t * t)
-        const price = 100 + (1900 * progress * progress);
-        setDisplayPrice(Math.round(price));
-
-        // 2. Thermometer Bar
-        if (thermoRef.current) {
-            thermoRef.current.style.width = `${progress * 100}%`;
-        }
-
-        // 3. Plus Sign
-        if (plusRef.current) {
-            const opacity = progress > 0.8 ? (progress - 0.8) / 0.2 : 0;
-            plusRef.current.style.opacity = opacity.toString();
-        }
-    };
-
-    const onPointerDown = (e: React.PointerEvent) => {
-        if (window.innerWidth >= 1024) return;
-        isDragging.current = true;
-        (e.target as Element).setPointerCapture(e.pointerId);
-        handleMobileInteraction(e.clientX);
-    };
-
-    const onPointerMove = (e: React.PointerEvent) => {
-        if (!isDragging.current) return;
-        handleMobileInteraction(e.clientX);
-    };
-
-    const onPointerUp = (e: React.PointerEvent) => {
-        isDragging.current = false;
-        (e.target as Element).releasePointerCapture(e.pointerId);
-    };
-
+    const totalHours = teamSize * hoursPerPerson;
+    const moneyLostYear = totalHours * 52 * 8;
+    // Asumimos un costo de implementación base de referência para calcular ROI real
+    const estimatedOitoCost = 2500 + (teamSize * 100);
+    const roi = Math.max(0, Math.round(((moneyLostYear - estimatedOitoCost) / estimatedOitoCost) * 100));
 
     useGSAP(() => {
-        const mm = gsap.matchMedia();
-
-        // Initial state for plus sign
-        gsap.set(plusRef.current, { opacity: 0 });
-
-        // Desktop
-        mm.add("(min-width: 1024px)", () => {
-            // Reset to vertical
-            gsap.set(thermoRef.current, { height: "0%", width: "100%" });
-
-            const tl = gsap.timeline({
-                scrollTrigger: {
-                    trigger: containerRef.current,
-                    start: "top top",
-                    end: "+=2250",
-                    pin: true,
-                    scrub: 1,
-                    anticipatePin: 1,
-                    fastScrollEnd: true,
-                    preventOverlaps: true,
-                    onUpdate: (self) => {
-                        setScrollProgress(self.progress);
-                    }
-                }
-            });
-
-            // Animate Price
-            tl.to(priceObj.current, {
-                val: 2000,
-                duration: 1,
-                ease: "power2.in",
-                onUpdate: () => {
-                    setDisplayPrice(Math.round(priceObj.current.val));
-                }
-            });
-
-            // Animate Thermometer along same timeline
-            tl.to(thermoRef.current, {
-                height: "100%",
-                duration: 1,
-                ease: "none"
-            }, "<");
-
-            // Animate Plus Sign appearing near the end
-            tl.to(plusRef.current, {
-                opacity: 1,
-                duration: 0.2,
-                ease: "power2.out"
-            }, 0.8); // Starts at 80% of the timeline
+        // Entrance animation for the glass panel
+        gsap.from(calculatorRef.current, {
+            scrollTrigger: {
+                trigger: wrapperRef.current,
+                start: "top 70%",
+            },
+            y: 50,
+            opacity: 0,
+            duration: 1,
+            ease: "power3.out"
         });
-
-        // Mobile fallback
-        mm.add("(max-width: 1023px)", () => {
-            // Reset to horizontal & initial state because no ScrollTrigger controls it by default now
-            gsap.set(thermoRef.current, { width: "0%", height: "100%" });
-            // Ensure section is NOT pinned, so no ScrollTrigger config here for pinning
-        });
-
-    }, { scope: containerRef });
+    }, { scope: wrapperRef });
 
     return (
-        <section ref={containerRef} id="pricing" className={styles.pricingSection}>
-            <div ref={contentRef} className={styles.stickyContainer}>
+        <div ref={wrapperRef} className={styles.pricingWrapper}>
+            <section id="pricing-calculator" className={styles.calculatorSection}>
+                <div className={styles.stickyContainer}>
 
-                <div className={styles.header}>
-                    <h2 className={styles.title}>Nos ajustamos a las necesidades de <span className={styles.highlight}>tu proyecto</span></h2>
-                    <p className={styles.subtitle}>
-                        Desarrollamos una amplia variedad de sistemas, y la inversión de tu proyecto depende de su complejidad.
-                        Con <span className={styles.brandHighlight}>oito</span> puedes aprovechar al máximo tu presupuesto.
-                    </p>
-                </div>
-
-                <div className={styles.contentGrid}>
-                    {/* Left Column: Animated Workflow Graph */}
-                    <div className={styles.imageContainer}>
-                        <WorkflowAnimation progress={scrollProgress} />
+                    <div className={styles.header}>
+                        <h2 className={styles.title}>Calcula el costo real de <span className={styles.highlight}>no automatizar</span></h2>
+                        <p className={styles.subtitle}>
+                            El tiempo no perdona. Analiza cuánto pierde tu equipo en tareas repetitivas
+                            y el impacto económico real de implementar <span className={styles.brandHighlight}>oito</span>.
+                        </p>
                     </div>
 
-                    {/* Right Column: Price and Thermometer */}
-                    <div className={styles.pricingControls}>
-                        <div className={styles.priceDisplay}>
-                            <div className={styles.currencyWrapper}>
-                                <span ref={plusRef} className={styles.plusSign}>+</span>
-                                <span className={styles.currency}>$</span>
-                            </div>
-                            {displayPrice}
-                        </div>
-
-                        <div className={styles.thermometerContainer}>
-                            <div
-                                ref={trackRef}
-                                className={styles.thermometerWrapper}
-                                onPointerDown={onPointerDown}
-                                onPointerMove={onPointerMove}
-                                onPointerUp={onPointerUp}
-                                onPointerLeave={onPointerUp} // Good practice
-                                style={{ touchAction: 'none' }} // Prevent scrolling while dragging
-                            >
-                                <div
-                                    ref={thermoRef}
-                                    className={styles.thermometerFill}
-                                >
-                                    <div className={styles.dragIndicator} />
+                    <div className={styles.calculatorCenter}>
+                        <div ref={calculatorRef} className={styles.calculatorGlass}>
+                            <div className={styles.slidersContainer}>
+                                <div className={styles.sliderGroup}>
+                                    <div className={styles.sliderHeader}>
+                                        <label>Tamaño de tu equipo</label>
+                                        <span className={styles.sliderValue}>{teamSize} {teamSize === 1 ? 'persona' : 'personas'}</span>
+                                    </div>
+                                    <input
+                                        type="range"
+                                        min="1"
+                                        max="50"
+                                        value={teamSize}
+                                        onChange={(e) => setTeamSize(Number(e.target.value))}
+                                        className={styles.slider}
+                                        style={{ background: `linear-gradient(to right, var(--color-accent) ${((teamSize - 1) / 49) * 100}%, rgba(255,255,255,0.1) ${((teamSize - 1) / 49) * 100}%)` }}
+                                    />
+                                </div>
+                                <div className={styles.sliderGroup}>
+                                    <div className={styles.sliderHeader}>
+                                        <label>Horas de labores manuales a la semana p/p</label>
+                                        <span className={styles.sliderValue}>{hoursPerPerson} hrs</span>
+                                    </div>
+                                    <input
+                                        type="range"
+                                        min="1"
+                                        max="40"
+                                        value={hoursPerPerson}
+                                        onChange={(e) => setHoursPerPerson(Number(e.target.value))}
+                                        className={styles.slider}
+                                        style={{ background: `linear-gradient(to right, var(--color-accent) ${((hoursPerPerson - 1) / 39) * 100}%, rgba(255,255,255,0.1) ${((hoursPerPerson - 1) / 39) * 100}%)` }}
+                                    />
                                 </div>
                             </div>
-                            <span className={styles.thermometerLabel}>Complejidad del proyecto</span>
+
+                            <div className={styles.resultsContainer}>
+                                <div className={styles.statBox}>
+                                    <div className={styles.statIconWrapper}>
+                                        <Hourglass size={24} className={styles.iconBad} />
+                                    </div>
+                                    <span className={styles.statLabel}>Horas/semana perdidas</span>
+                                    <div className={styles.statValueBad}>{totalHours}h</div>
+                                    <span className={styles.statSub}>Antes de <span className={styles.brandHighlight}>oito</span></span>
+                                </div>
+
+                                <div className={styles.statBox}>
+                                    <div className={styles.statIconWrapper}>
+                                        <DollarSign size={24} className={styles.iconBad} />
+                                    </div>
+                                    <span className={styles.statLabel}>Costo invisible anual</span>
+                                    <div className={styles.statValueBad}>${moneyLostYear.toLocaleString('en-US')}</div>
+                                    <span className={styles.statSub}>*Calculado a $8/hr</span>
+                                </div>
+
+                                <div className={styles.statBoxGood}>
+                                    <div className={styles.statIconWrapperGood}>
+                                        <TrendingUp size={28} className={styles.iconGood} />
+                                    </div>
+                                    <span className={styles.statLabel}>ROI estimado con <span className={styles.brandHighlight}>oito</span></span>
+                                    <div className={styles.statValueGood}>+{roi}%</div>
+                                    <span className={styles.statSubGood}>
+                                        Retorno de inversión el 1er año
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className={styles.ctaContainer}>
+                            <p className={styles.ctaText}>
+                                La inversión de tu proyecto depende de su complejidad. Con <span className={styles.brandHighlight}>oito</span> puedes aprovechar al máximo tu presupuesto.
+                            </p>
+                            <a href="#contact" className={styles.ctaButton}>
+                                Cotiza tu proyecto con nosotros
+                                <ChevronRight size={20} className={styles.ctaIcon} />
+                            </a>
                         </div>
                     </div>
-                </div>
 
-            </div>
-        </section>
+                </div>
+            </section>
+        </div>
     );
 }

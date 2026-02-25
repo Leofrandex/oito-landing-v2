@@ -3,23 +3,25 @@
 import { useRef } from 'react';
 import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { ChevronDown } from 'lucide-react';
 import styles from './Hero.module.css';
+import TextType from './TextType';
 
-if (typeof window !== 'undefined') {
-    gsap.registerPlugin(ScrollTrigger);
-}
-
-export default function Hero() {
+export default function Hero({ isLoaded = true }: { isLoaded?: boolean }) {
     const sectionRef = useRef<HTMLElement>(null);
     const contentRef = useRef<HTMLDivElement>(null);
     const oitoTextRef = useRef<HTMLSpanElement>(null);
     const mainTextRef = useRef<HTMLSpanElement>(null);
     const descriptionRef = useRef<HTMLParagraphElement>(null);
     const ctaButtonRef = useRef<HTMLButtonElement>(null);
-    const scrollIndicatorRef = useRef<HTMLDivElement>(null);
-    const progressBarRef = useRef<HTMLDivElement>(null);
+
+    const ROTATING_WORDS = [
+        "facturación",
+        "prospección",
+        "onboarding de clientes",
+        "generación de contenido",
+        "inventario",
+        "generación de propuestas"
+    ];
 
     const scrollToContact = () => {
         const element = document.getElementById('contact');
@@ -36,110 +38,52 @@ export default function Hero() {
     };
 
     useGSAP(() => {
+        // Hide elements initially
+        gsap.set([oitoTextRef.current, mainTextRef.current], { opacity: 0, y: 50 });
+        gsap.set([descriptionRef.current, ctaButtonRef.current], { opacity: 0, y: 20 });
+
+        if (!isLoaded) return;
+
         // Initial animation for Headline (Load only, not scroll-driven)
         const headlineTl = gsap.timeline();
-        headlineTl.fromTo([oitoTextRef.current, mainTextRef.current],
-            { opacity: 0, y: 50 },
+        headlineTl.to([oitoTextRef.current, mainTextRef.current],
             { opacity: 1, y: 0, duration: 1, stagger: 0.2, ease: "power2.out" }
+        ).to([descriptionRef.current, ctaButtonRef.current],
+            { opacity: 1, y: 0, duration: 0.8, stagger: 0.2, ease: "power2.out" },
+            "-=0.5"
         );
 
-        // Scroll-driven animation for Description, CTA, and Progress
-        // Paused initially, controlled by ScrollTrigger
-        const tl = gsap.timeline({ paused: true });
-
-        const mm = gsap.matchMedia();
-
-        // Desktop Pinning (Longer duration)
-        mm.add("(min-width: 1024px)", () => {
-            ScrollTrigger.create({
-                trigger: sectionRef.current,
-                start: "top top",
-                end: "+=150%",
-                pin: true,
-                anticipatePin: 1,
-                onUpdate: (self) => {
-                    if (self.progress > tl.progress()) {
-                        gsap.to(tl, {
-                            progress: self.progress,
-                            duration: 0.5,
-                            ease: "power1.out",
-                            overwrite: true
-                        });
-                    }
-                }
-            });
-        });
-
-        // Mobile Pinning (Shorter duration)
-        mm.add("(max-width: 1023px)", () => {
-            ScrollTrigger.create({
-                trigger: sectionRef.current,
-                start: "top top",
-                end: "+=80%", // Reduced scroll distance for mobile
-                pin: true,
-                anticipatePin: 1,
-                onUpdate: (self) => {
-                    if (self.progress > tl.progress()) {
-                        gsap.to(tl, {
-                            progress: self.progress,
-                            duration: 0.5,
-                            ease: "power1.out",
-                            overwrite: true
-                        });
-                    }
-                }
-            });
-        });
-
-        // Set initial states for scroll elements
-        gsap.set([descriptionRef.current, ctaButtonRef.current], {
-            opacity: 0,
-            y: 50
-        });
-
-        gsap.set(scrollIndicatorRef.current, { opacity: 1 });
-        gsap.set(progressBarRef.current, { height: '0%' });
-
-        // Animation sequence (Only Description and CTA now)
-        tl.to(descriptionRef.current, { opacity: 1, y: 0, duration: 1 })
-            .to(ctaButtonRef.current, { opacity: 1, y: 0, duration: 1 }, "-=0.5")
-            // Fill progress bar
-            .to(progressBarRef.current, { height: '100%', duration: 2.5, ease: "none" }, 0)
-            // Fade out indicator
-            .to(scrollIndicatorRef.current, { opacity: 0, duration: 0.4 }, 1.9)
-            // Pause
-            .to({}, { duration: 0.5 });
-
-    }, { scope: sectionRef });
+    }, { scope: sectionRef, dependencies: [isLoaded] });
 
     return (
         <section id="hero" className={styles.hero} ref={sectionRef}>
             <div className={styles.content} ref={contentRef}>
                 <h1 className={styles.headline}>
-                    <span className={styles.oitoText} ref={oitoTextRef}>oito</span>
+                    <span className={styles.oitoText} ref={oitoTextRef} style={{ opacity: 0 }}>oito</span>
                     <span className="sr-only"> </span>
-                    <span className={styles.mainText} ref={mainTextRef}>LO HACE POR TI</span>
+                    <span className={styles.mainText} ref={mainTextRef} style={{ opacity: 0 }}>LO HACE POR TI</span>
                 </h1>
-                <p className={styles.description} ref={descriptionRef}>
-                    Diseñamos sistemas inteligentes de IA para elevar la productividad de tu negocio
+                <p className={styles.description} ref={descriptionRef} style={{ opacity: 0 }}>
+                    Diseñamos sistemas de IA que automatizan tu{' '}
+                    <br className={styles.mobileBreak} />
+                    <TextType
+                        text={ROTATING_WORDS}
+                        as="span"
+                        className={styles.rotatingTextWrap}
+                        typingSpeed={50}
+                        deletingSpeed={30}
+                        pauseDuration={2000}
+                    />
                 </p>
                 <button
                     type="button"
                     className={styles.ctaButton}
                     onClick={scrollToContact}
                     ref={ctaButtonRef}
+                    style={{ opacity: 0 }}
                 >
                     oitomatiza
                 </button>
-            </div>
-
-            {/* Scroll Indicator */}
-            <div className={styles.scrollIndicator} ref={scrollIndicatorRef}>
-                <div className={styles.progressBarContainer}>
-                    <div className={styles.progressBar} ref={progressBarRef}></div>
-                </div>
-                <span className={styles.scrollText}>scroll</span>
-                <ChevronDown className={styles.scrollArrow} size={18} strokeWidth={1.5} />
             </div>
         </section>
     );

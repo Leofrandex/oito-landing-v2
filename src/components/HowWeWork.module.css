@@ -1,5 +1,5 @@
 .howWeWork {
-    padding: 8rem 4rem;
+    padding: 8rem 4rem 12rem;
     position: relative;
     z-index: 10;
 }
@@ -36,12 +36,104 @@
 
 .sectionDescription {
     font-family: var(--font-dm-sans);
-    font-size: var(--text-subtitle);
+    font-size: var(--text-body);
     color: var(--color-text-charcoal);
     text-align: center;
     max-width: 800px;
     margin: 0 auto 6rem auto;
     line-height: 1.6;
+}
+
+.metricsContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    margin: 6rem auto 6rem auto;
+    align-items: center;
+    background: rgba(9, 188, 138, 0.1);
+    border: 1px solid rgba(9, 188, 138, 0.3);
+    border-radius: 16px;
+    padding: 2.5rem 2rem;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    max-width: 900px;
+}
+
+.metricsIntro {
+    font-family: var(--font-dm-sans);
+    font-size: 1.15rem;
+    color: var(--color-hero-bg);
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto;
+    line-height: 1.6;
+}
+
+.metricsGrid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    width: 100%;
+    max-width: 1000px;
+}
+
+.metricColumn {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.metricColumn:hover {
+    transform: translateY(-5px);
+}
+
+.metricVerb,
+.metricNoun {
+    font-family: var(--font-dm-sans);
+    font-size: var(--text-body);
+    color: var(--color-hero-bg);
+}
+
+.metricVerb {
+    font-weight: 400;
+}
+
+.metricNoun {
+    font-weight: 700;
+}
+
+.metricNumber {
+    font-family: var(--font-varela-round);
+    font-size: var(--text-h2);
+    font-weight: 800;
+
+    /* Deep Mint Gradient Text Effect */
+    background: linear-gradient(90deg, #036B4D 0%, #09BC8A 50%, #036B4D 100%);
+    background-size: 200% auto;
+    color: #09BC8A;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: textShine 3s linear infinite;
+}
+
+@keyframes textShine {
+    to {
+        background-position: 200% center;
+    }
+}
+
+.timeCounter,
+.timeMetric {
+    font-family: var(--font-varela-round);
+    font-weight: 700;
+    color: var(--color-accent);
+    font-size: 1.2em;
+    padding: 0 0.2rem;
+    font-variant-numeric: tabular-nums;
 }
 
 .brandHighlight {
@@ -191,11 +283,22 @@
         text-align: center;
     }
 
+    .stepTitle {
+        white-space: normal;
+        word-wrap: break-word;
+    }
+
     .leftCol .description,
     .rightCol .description {
         margin: 0 auto;
         width: auto;
         /* Reset fixed width on mobile */
         max-width: 350px;
+    }
+
+    .metricsGrid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+        padding: 0 1rem;
     }
 }

@@ -1,9 +1,9 @@
 'use client';
 
-import { useState, Fragment } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { Fragment, useRef } from 'react';
+import { ParticleCard, GlobalSpotlight } from './MagicBento';
 import {
-    ChevronLeft, ChevronRight, TrendingUp, Clock, Target, ShieldCheck, Zap,
+    ChevronRight, TrendingUp, Clock, Target, ShieldCheck, Zap,
     Search, Brain, CalendarCheck, MessageCircleQuestion, Database, MessageCircleHeart,
     Upload, Sparkles, Share2, CreditCard, FileText, Bell, Users, Bot, UserCheck,
     ShoppingCart, BrainCircuit, Truck, UserPlus, FileSignature, Video,
@@ -20,22 +20,12 @@ interface Case {
     workflow: any[]; // Array of 3 icons
 }
 
-// Data for 10 Automation Cases
+// Data for 9 Automation Cases
 const cases: Case[] = [
-    {
-        id: 1,
-        title: 'Elaboración de documentos en Tiempo Récord',
-        description: 'Rellena un formulario simple con los datos del cliente y el sistema genera un documento personalizado a partir de una plantilla, lo envía para firma digital y lo archiva automáticamente en la nube. Olvídate de perseguir firmas y de errores de "copiar y pegar".',
-        kpis: [
-            { label: 'Tiempo de cierre', value: '-70%', icon: Zap },
-            { label: 'Errores manuales', value: '0', icon: ShieldCheck }
-        ],
-        workflow: [FileInput, FileText, CloudUpload]
-    },
     {
         id: 2,
         title: 'Calificador de Leads',
-        description: 'Cuando alguien pregunta por tus servicios en Facebook Ads, un bot califica al usuario preguntando su presupuesto y urgencia. Solo los contactos que cumplen con tus requisitos llegan a tu CRM, ahorrándole a tu equipo ventas llamadas innecesarias.',
+        description: 'Un bot califica prospectos por presupuesto y urgencia. Solo contactos ideales llegan a tu CRM.',
         kpis: [
             { label: 'Productividad ventas', value: '+50%', icon: Target },
             { label: 'Velocidad contacto', value: '3x', icon: Zap }
@@ -44,8 +34,8 @@ const cases: Case[] = [
     },
     {
         id: 3,
-        title: 'Soporte al Cliente con "ADN" de tu Marca',
-        description: 'Un agente inteligente recibe las dudas por WhatsApp, consulta tu base de conocimientos y responde de forma humana y precisa. Si el caso es crítico, lo transfiere a un humano con un resumen de la situación ya listo.',
+        title: 'Soporte al Cliente',
+        description: 'Agente inteligente que responde dudas humanamente y transfiere casos críticos a tu equipo con un resumen listo.',
         kpis: [
             { label: 'Tiempo de respuesta', value: '-60%', icon: Clock },
             { label: 'Casos resueltos', value: '45%', icon: Bot }
@@ -54,18 +44,18 @@ const cases: Case[] = [
     },
     {
         id: 4,
-        title: 'Cobranza Automática y Cero Papaleo',
-        description: 'Sincroniza tus pagos recibidos con tu software contable para generar y enviar facturas al instante. Si un pago se atrasa, el sistema envía recordatorios amigables por WhatsApp y solo te avisa si el cliente no responde tras tres intentos.',
+        title: 'Cobranza y Facturación',
+        description: 'Genera y envía facturas al instante y envía recordatorios amigables de pago por WhatsApp automáticamente.',
         kpis: [
             { label: 'Errores facturación', value: '-95%', icon: ShieldCheck },
-            { label: 'mejora en el ciclo de caja', value: '10 días', icon: TrendingUp }
+            { label: 'Mejora ciclo caja', value: '10 días', icon: TrendingUp }
         ],
         workflow: [CreditCard, FileText, Bell]
     },
     {
         id: 5,
         title: 'Inventario Inteligente',
-        description: 'Monitorea tus ventas en tiempo real y predice cuándo te quedarás sin stock basándose en el ritmo de compra. Genera automáticamente un borrador de orden de compra para tu proveedor antes de que el producto se agote.',
+        description: 'Monitorea tus ventas y envía un borrador de compra al proveedor antes de que el stock se agote.',
         kpis: [
             { label: 'Ventas perdidas', value: '-25%', icon: TrendingUp },
             { label: 'Revisión manual', value: '-80%', icon: Eye }
@@ -74,159 +64,110 @@ const cases: Case[] = [
     },
     {
         id: 6,
-        title: 'Generacion de contenido para redes sociales',
-        description: 'Al subir un video o audio a una carpeta, la automatización genera subtítulos, extrae las 3 mejores frases para X, crea un resumen para LinkedIn y programa todo en tus redes sociales. Mantén tu marca activa en todos los canales con un solo clic.',
+        title: 'Generación de Contenido',
+        description: 'A partir de un video genéralo todo: subtítulos, hilos, resúmenes y programas en redes sociales en 1 clic.',
         kpis: [
-            { label: 'volumen de contenido', value: '+400%', icon: TrendingUp },
-            { label: 'ahorradas en creacion de contenido al mes', value: '12 horas', icon: PenTool }
+            { label: 'Volumen', value: '+400%', icon: TrendingUp },
+            { label: 'Ahorro mensual', value: '12 hrs', icon: PenTool }
         ],
         workflow: [Upload, Sparkles, Share2]
     },
     {
         id: 7,
-        title: 'Prospección Inteligente 24/7',
-        description: 'Captura leads de cualquier fuente, investiga automáticamente el perfil de la empresa con IA y redacta un correo de contacto personalizado. El sistema clasifica el interés del prospecto y agenda la cita en tu calendario sin que muevas un dedo.',
+        title: 'Documentos en Tiempo Récord',
+        description: 'Genera documentos, envíalos para firma digital y archívalos automáticamente. Cero errores garantizados.',
         kpis: [
-            { label: 'ahorradas en investigacion al mes', value: '15 horas', icon: Clock },
-            { label: 'Tasa de respuesta', value: '+35%', icon: MessageCircleQuestion }
+            { label: 'Tiempo de cierre', value: '-70%', icon: Zap },
+            { label: 'Errores manuales', value: '0', icon: ShieldCheck }
         ],
-        workflow: [Search, Brain, CalendarCheck]
+        workflow: [FileInput, FileText, CloudUpload]
     },
     {
         id: 8,
         title: 'Radar de Proyectos',
-        description: 'La IA analiza el progreso de las tareas en tu gestor de proyectos y envía un resumen ejecutivo a tus clientes cada viernes por email. Detecta cuellos de botella y te avisa proactivamente si una fecha de entrega está en riesgo.',
+        description: 'Analiza el progreso en tu gestor y envía resúmenes detectando cuellos de botella proactivamente.',
         kpis: [
-            { label: 'ahorradas en reportes al mes', value: '5 horas', icon: Clock },
-            { label: 'satisfaccion al cliente', value: '+30%', icon: Star }
+            { label: 'Ahorro reportes', value: '5 hrs', icon: Clock },
+            { label: 'Satisfacción', value: '+30%', icon: Star }
         ],
         workflow: [Layout, Eye, Mail]
     },
     {
         id: 9,
-        title: 'Onboarding de Empleados en Segundos',
-        description: 'Al contratar nuevo talento, el sistema crea automáticamente su correo, lo añade a los canales de comunicacion, genera su contrato digital para firma y le envía un video de bienvenida. Una experiencia profesional que elimina el caos administrativo del primer día.',
+        title: 'Onboarding Empleados',
+        description: 'Crea el correo, canales de comunicación y genera contratos para el nuevo talento en segundos.',
         kpis: [
-            { label: 'tiempo administrativo', value: '-90%', icon: Clock },
-            { label: 'Cumplimiento día 1', value: '100%', icon: ShieldCheck }
+            { label: 'Tiempo admin', value: '-90%', icon: Clock },
+            { label: 'Cumplimiento', value: '100%', icon: ShieldCheck }
         ],
         workflow: [UserPlus, FileSignature, Video]
     },
     {
         id: 10,
-        title: 'Gestión de Reseñas Proactiva',
-        description: 'Cada vez que recibes una opinión en Google Maps o redes sociales, la IA redacta una respuesta personalizada agradeciendo o resolviendo dudas. Si la reseña es negativa, alerta inmediatamente al gerente para salvar la relación con el cliente.',
+        title: 'Gestión de Reseñas',
+        description: 'Redacta respuestas personalizadas a reseñas y alerta si alguna es negativa para salvar al cliente.',
         kpis: [
             { label: 'Reseñas respondidas', value: '100%', icon: Clock },
-            { label: 'mejora de la calificacion', value: '+15%', icon: Star }
+            { label: 'Calificación', value: '+15%', icon: Star }
         ],
         workflow: [Star, PenTool, ThumbsUp]
     }
 ];
 
 export default function Portfolio() {
-    const [currentIndex, setCurrentIndex] = useState(0);
-    const [direction, setDirection] = useState(0);
-    const [isPaused, setIsPaused] = useState(false);
-
-    const handleNext = () => {
-        setDirection(1);
-        setCurrentIndex((prev) => (prev + 1) % cases.length);
-    };
-
-    const handlePrev = () => {
-        setDirection(-1);
-        setCurrentIndex((prev) => (prev === 0 ? cases.length - 1 : prev - 1));
-    };
-
-    // Auto-slide effect handled via CSS animation end event on progress bar to prevent desync
-
-    // Variants for animations
-    const slideVariants = {
-        enter: (direction: number) => ({
-            x: direction > 0 ? 500 : -500,
-            opacity: 0,
-            scale: 0.95
-        }),
-        center: {
-            zIndex: 1,
-            x: 0,
-            opacity: 1,
-            scale: 1
-        },
-        exit: (direction: number) => ({
-            zIndex: 0,
-            x: direction < 0 ? 500 : -500,
-            opacity: 0,
-            scale: 0.95
-        })
-    };
+    const gridRef = useRef<HTMLDivElement>(null);
 
     return (
-        <section id="portfolio" className={styles.portfolio}>
+        <section id="portfolio" className={`${styles.portfolio} bento-section`} ref={gridRef}>
+            <GlobalSpotlight gridRef={gridRef} glowColor="9, 188, 138" />
             <div className={styles.contentContainer}>
+                <div className={styles.bentoGrid}>
+                    <ParticleCard
+                        className={`${styles.bentoCard} ${styles.bentoCard0} magic-bento-card magic-bento-card--border-glow`}
+                        glowColor="9, 188, 138"
+                        particleCount={0}
+                        style={{ '--glow-color': '9, 188, 138' } as any}
+                    >
+                        <div className={styles.introCard}>
+                            <h2 className={styles.introTitle}>
+                                Lo que <span className={styles.oitoBrand}>oito</span> puede hacer por ti
+                            </h2>
+                            <p className={styles.introDesc}>
+                                Descubre cómo la IA transforma la eficiencia operativa de tu negocio. Desde <strong>agentes de soporte y calificador de leads</strong>, hasta <strong>generación de documentos y cobranza</strong>. Implementamos sistemas inteligentes a medida que se integran en tus herramientas actuales.
+                            </p>
+                            <div className={styles.introTags}>
+                                <span className={styles.introTag}><Bot size={18} /> Agentes de Soporte</span>
+                                <span className={styles.introTag}><Target size={18} /> Calificador de Leads</span>
+                                <span className={styles.introTag}><FileInput size={18} /> Documentos en Tiempo Récord</span>
+                                <span className={styles.introTag}><CreditCard size={18} /> Cobranza y Facturación</span>
+                            </div>
+                        </div>
+                    </ParticleCard>
 
-                <div className={styles.sectionHeader}>
-                    <h2 className={styles.sectionTitle}>Conoce algunos casos</h2>
-                    <p className={styles.sectionDescription}>
-                        Descubre cómo la IA puede transformar los procesos operativos de tu negocio.
-                    </p>
-                </div>
+                    {cases.map((_case, i) => {
+                        const index = i + 1;
+                        const isSmallBox = [1, 2, 4, 6, 8, 9].includes(index);
+                        const displayKpis = isSmallBox ? _case.kpis.slice(0, 1) : _case.kpis;
 
-                <div
-                    className={styles.carouselWrapper}
-                    onMouseEnter={() => setIsPaused(true)}
-                    onMouseLeave={() => setIsPaused(false)}
-                >
-                    {/* Navigation Buttons */}
-                    <button onClick={handlePrev} className={`${styles.navButton} ${styles.prevBtn}`}>
-                        <ChevronLeft size={32} />
-                    </button>
-                    <button onClick={handleNext} className={`${styles.navButton} ${styles.nextBtn}`}>
-                        <ChevronRight size={32} />
-                    </button>
-
-                    <div className={styles.progressBarContainer}>
-                        <div
-                            key={currentIndex}
-                            className={`${styles.progressBarFill} ${isPaused ? styles.progressBarPaused : ''}`}
-                            style={{
-                                animationPlayState: isPaused ? 'paused' : 'running'
-                            }}
-                            onAnimationEnd={handleNext}
-                        />
-                    </div>
-
-                    <AnimatePresence mode="wait" custom={direction}>
-                        <motion.div
-                            key={currentIndex}
-                            custom={direction}
-                            variants={slideVariants}
-                            initial="enter"
-                            animate="center"
-                            exit="exit"
-                            transition={{
-                                x: { type: "spring", stiffness: 300, damping: 30 },
-                                opacity: { duration: 0.2 }
-                            }}
-                            className={styles.slideWrapper}
-                        >
-                            {/* Main Card Content */}
-                            <div className={styles.cardContainer}>
-                                {/* Header: Title & Description */}
+                        return (
+                            <ParticleCard
+                                key={_case.id}
+                                className={`${styles.bentoCard} ${styles[`bentoCard${index}`]} magic-bento-card magic-bento-card--border-glow`}
+                                glowColor="9, 188, 138"
+                                particleCount={0}
+                                style={{ '--glow-color': '9, 188, 138' } as any}
+                            >
                                 <div className={styles.cardHeader}>
-                                    <h3 className={styles.cardTitle}>{cases[currentIndex].title}</h3>
-                                    <p className={styles.cardDescription}>{cases[currentIndex].description}</p>
+                                    <h3 className={styles.cardTitle}>{_case.title}</h3>
+                                    <p className={styles.cardDescription}>{_case.description}</p>
                                 </div>
 
-                                {/* Body: KPIs & Workflow */}
                                 <div className={styles.cardBody}>
-                                    {/* Left: KPIs (1/3) */}
                                     <div className={styles.kpiColumn}>
-                                        {cases[currentIndex].kpis.map((kpi, index) => (
-                                            <div key={index} className={styles.kpiItem}>
+                                        {displayKpis.map((kpi, idx) => (
+                                            <div key={idx} className={styles.kpiItem}>
                                                 <div className={styles.kpiIconWrapper}>
-                                                    <kpi.icon size={28} className={styles.kpiIcon} />
+                                                    <kpi.icon size={20} className={styles.kpiIcon} />
                                                 </div>
                                                 <div className={styles.kpiContent}>
                                                     <span className={styles.kpiValue}>{kpi.value}</span>
@@ -236,48 +177,33 @@ export default function Portfolio() {
                                         ))}
                                     </div>
 
-                                    {/* Right: Workflow (2/3) */}
-                                    <div className={styles.workflowColumn}>
-                                        {cases[currentIndex].workflow.map((Icon, index) => (
-                                            <Fragment key={index}>
-                                                <div className={styles.workflowStep}>
-                                                    <div className={styles.workflowIconBox}>
-                                                        <Icon className={styles.workflowStepIcon} />
+                                    {!isSmallBox && (
+                                        <div className={styles.workflowColumn}>
+                                            {_case.workflow.map((Icon, idx) => (
+                                                <Fragment key={idx}>
+                                                    <div className={styles.workflowStep}>
+                                                        <div className={styles.workflowIconBox}>
+                                                            <Icon className={styles.workflowStepIcon} size={20} />
+                                                        </div>
                                                     </div>
-                                                </div>
-                                                {/* Add Arrow if not the last item */}
-                                                {index < cases[currentIndex].workflow.length - 1 && (
-                                                    <div className={styles.arrowWrapper}>
-                                                        <ChevronRight size={32} className={styles.workflowArrow} />
-                                                    </div>
-                                                )}
-                                            </Fragment>
-                                        ))}
-                                    </div>
+                                                    {idx < _case.workflow.length - 1 && (
+                                                        <div className={styles.arrowWrapper}>
+                                                            <ChevronRight size={16} className={styles.workflowArrow} />
+                                                        </div>
+                                                    )}
+                                                </Fragment>
+                                            ))}
+                                        </div>
+                                    )}
                                 </div>
-                            </div>
-                        </motion.div>
-                    </AnimatePresence>
-                </div>
-
-                {/* Indicators */}
-                <div className={styles.indicators}>
-                    {cases.map((_, index) => (
-                        <div
-                            key={index}
-                            onClick={() => {
-                                setDirection(index > currentIndex ? 1 : -1);
-                                setCurrentIndex(index);
-                            }}
-                            className={`${styles.orb} ${index === currentIndex ? styles.orbActive : styles.orbInactive}`}
-                        />
-                    ))}
+                            </ParticleCard>
+                        );
+                    })}
                 </div>
 
                 <div className={styles.footerText}>
-                    Y mucho más...
+                    Y muchos más...
                 </div>
-
             </div>
         </section>
     );

@@ -1,11 +1,45 @@
-.pricingSection {
+.pricingWrapper {
     position: relative;
-    /* Height is standard 100vh; ScrollTrigger handles the pinning duration */
+    width: 100%;
+
+    background: radial-gradient(circle at top right, #002a2c, #004346);
+    padding: 2rem 0;
+    z-index: 40;
+    overflow: hidden;
+
+    border-top-left-radius: 80px;
+    border-top-right-radius: 80px;
+    margin-top: -120px;
+    box-shadow: 0 -30px 60px rgba(0, 0, 0, 0.4);
+    padding-top: 0;
+}
+
+/* Noise overlay */
+.pricingWrapper::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3F%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+    opacity: 0.05;
+    z-index: 2;
+    pointer-events: none;
+}
+
+.calculatorSection,
+.workflowSection {
+    position: relative;
+    z-index: 10;
     min-height: 100vh;
-    height: 100vh;
+    /* allow it to expand on short screens preventing container bleeding */
+    height: auto;
     background-color: transparent;
     overflow: hidden;
-    /* Prevent horizontal overflow from scaling elements if any */
+    width: 100%;
+    /* Add bottom padding to give the CTA room */
+    padding-bottom: 4rem;
 }
 
 .stickyContainer {
@@ -15,19 +49,21 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding: 4rem;
+    padding: 4rem 1rem;
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
 .header {
     text-align: center;
-    margin-bottom: 4rem;
+    margin-bottom: 3rem;
     z-index: 10;
 }
 
 .title {
     font-family: var(--font-dm-sans);
     font-size: var(--text-h2);
-    color: var(--color-hero-bg);
+    color: #ffffff;
     margin-bottom: 1rem;
     font-weight: 700;
 }
@@ -39,10 +75,10 @@
 .subtitle {
     font-family: var(--font-dm-sans);
     font-size: var(--text-body);
-    color: rgba(51, 51, 51, 0.8);
-    /* Replaced opacity: 0.8 to allow nested span to be fully bright */
-    max-width: 600px;
+    color: rgba(255, 255, 255, 0.85);
+    max-width: 800px;
     margin: 0 auto;
+    line-height: 1.6;
 }
 
 .brandHighlight {
@@ -52,203 +88,320 @@
     line-height: inherit;
     font-weight: 400;
     display: inline-block;
+    text-transform: lowercase;
 }
 
-.contentGrid {
-    display: grid;
-    grid-template-columns: 2fr 1fr;
-    gap: 4rem;
-    max-width: 1200px;
-    width: 100%;
-    margin: 0 auto;
-    align-items: center;
-    height: 60%;
-}
-
-/* Left Column: Animated Image Placeholder */
-.imageContainer {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-}
-
-
-
-/* Right Column: Pricing & Thermometer */
-.pricingControls {
+.calculatorCenter {
     display: flex;
     flex-direction: column;
-    gap: 2rem;
-    align-items: flex-start;
-    height: 100%;
-    justify-content: center;
+    align-items: center;
+    width: 100%;
+    max-width: 1000px;
+    gap: 3rem;
 }
 
-.priceDisplay {
-    font-family: var(--font-dm-sans);
-    font-size: var(--text-h1);
+.calculatorGlass {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-radius: 24px;
+    padding: 2.5rem;
+    width: 100%;
+    max-width: 1100px;
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    /* Prevenir overflow en pantallas pequeñas pero altas */
+    box-sizing: border-box;
+}
+
+.slidersContainer {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+}
+
+.sliderGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.sliderHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: var(--font-dm-sans, sans-serif);
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.sliderValue {
     font-weight: 700;
     color: var(--color-accent);
-    line-height: 1;
-    font-variant-numeric: tabular-nums;
-    display: flex;
-    align-items: flex-start;
+    background: rgba(9, 188, 138, 0.1);
+    padding: 0.25rem 0.75rem;
+    border-radius: 99px;
+    font-size: calc(var(--text-body) * 0.8);
 }
 
-.currencyWrapper {
-    display: flex;
-    flex-direction: row;
-    align-items: flex-start;
-    margin-right: 0.2rem;
-    padding-top: 0.5rem;
-    /* Adjust based on font baseline */
+.slider {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 8px;
+    border-radius: 4px;
+    background: rgba(255, 255, 255, 0.1);
+    outline: none;
+    transition: background 0.3s;
 }
 
-.currency {
-    font-size: var(--text-h2);
-    line-height: 1;
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: var(--color-accent);
+    cursor: pointer;
+    box-shadow: 0 0 10px rgba(9, 188, 138, 0.5);
+    transition: transform 0.2s, box-shadow 0.2s;
 }
 
-.plusSign {
-    font-size: var(--text-h2);
-    /* Match currency size */
-    line-height: 1;
-    margin-right: 2px;
+.slider::-webkit-slider-thumb:hover {
+    transform: scale(1.2);
+    box-shadow: 0 0 15px rgba(9, 188, 138, 0.8);
 }
 
-.thermometerContainer {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: 2rem;
-    height: 300px;
+.resultsContainer {
+    display: grid;
+    /* adjust grid for better fitting and prevent breaking */
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.5rem;
+    padding-top: 2.5rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
     width: 100%;
 }
 
-.thermometerLabel {
-    font-family: var(--font-dm-sans);
-    /* Changed from text-h2 (Dongle) to subtitle (DM Sans) to maintain visual balance */
-    font-size: var(--text-subtitle);
-    line-height: 1;
-    color: var(--color-hero-bg);
-    font-weight: 500;
+.statBox {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    text-align: center;
+    padding: 1.5rem;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
-/* The Layout for the bar itself */
-.thermometerWrapper {
+.statBoxGood {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    text-align: center;
+    padding: 1.5rem;
+    background: rgba(9, 188, 138, 0.05);
+    border-radius: 16px;
+    border: 1px solid rgba(9, 188, 138, 0.2);
+    box-shadow: 0 0 30px rgba(9, 188, 138, 0.1);
     position: relative;
-    height: 100%;
-    width: 24px;
-    background-color: #eee;
-    border-radius: 999px;
     overflow: hidden;
 }
 
-.thermometerFill {
+.statBoxGood::before {
+    content: '';
     position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    background-color: var(--color-hero-bg);
-    border-radius: 999px;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(9, 188, 138, 0.1) 0%, transparent 70%);
+    animation: rotateGlow 10s linear infinite;
+    z-index: 0;
+    pointer-events: none;
 }
 
-.dragIndicator {
-    display: none;
+@keyframes rotateGlow {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
 }
 
-@media (max-width: 1024px) {
-    .pricingSection {
+.statBoxGood>* {
+    position: relative;
+    z-index: 1;
+}
+
+.statIconWrapper {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: rgba(255, 71, 87, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 0.5rem;
+}
+
+.statIconWrapperGood {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: rgba(9, 188, 138, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 0.5rem;
+    box-shadow: 0 0 15px rgba(9, 188, 138, 0.4);
+}
+
+.iconBad {
+    color: #ff4757;
+}
+
+.iconGood {
+    color: #09BC8A;
+}
+
+.statSub {
+    font-family: var(--font-dm-sans);
+    font-size: calc(var(--text-body) * 0.7);
+    color: rgba(255, 255, 255, 0.4);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-top: 0.5rem;
+}
+
+.statSubGood {
+    font-family: var(--font-dm-sans);
+    font-size: calc(var(--text-body) * 0.75);
+    color: var(--color-accent);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-top: 0.5rem;
+}
+
+.statLabel {
+    font-family: var(--font-dm-sans, sans-serif);
+    font-size: var(--text-body, 1.1rem);
+    color: rgba(255, 255, 255, 0.7);
+    font-weight: 500;
+}
+
+.statValueBad {
+    font-family: var(--font-dm-sans, sans-serif);
+    font-size: calc(var(--text-h2) * 0.9);
+    font-weight: 700;
+    color: #ff4757;
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+    margin-top: 0.25rem;
+}
+
+.statValueGood {
+    font-family: var(--font-dm-sans, sans-serif);
+    font-size: var(--text-h2);
+    font-weight: 700;
+    color: #09BC8A;
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+    margin-top: 0.25rem;
+}
+
+.ctaContainer {
+    margin-top: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+    position: relative;
+    z-index: 10;
+}
+
+.ctaText {
+    font-family: var(--font-dm-sans);
+    font-size: var(--text-body);
+    color: rgba(255, 255, 255, 0.85);
+    max-width: 600px;
+    text-align: center;
+    line-height: 1.6;
+}
+
+.ctaButton {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background-color: var(--color-accent);
+    color: var(--color-hero-bg);
+    padding: 1.25rem 2.5rem;
+    border-radius: 9999px;
+    font-family: var(--font-dm-sans);
+    font-weight: 700;
+    font-size: var(--text-body);
+    text-decoration: none;
+    transition: transform 0.2s ease, background-color 0.2s ease;
+    box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.2);
+}
+
+.ctaIcon {
+    transition: transform 0.2s ease;
+}
+
+.ctaButton:hover {
+    background-color: #ffffff;
+    transform: translateY(-3px);
+    color: var(--color-hero-bg);
+}
+
+.ctaButton:hover .ctaIcon {
+    transform: translateX(4px);
+}
+
+@media (max-width: 768px) {
+
+    .calculatorSection,
+    .workflowSection {
         height: auto;
         min-height: auto;
         padding: 4rem 1rem;
     }
 
-    .contentGrid {
+    .stickyContainer {
+        padding: 2rem 1rem;
+    }
+
+    .calculatorGlass {
+        padding: 2rem 1.5rem;
+    }
+
+    .slidersContainer {
         grid-template-columns: 1fr;
-        grid-template-rows: 1fr auto;
         gap: 2rem;
     }
 
-    .imageContainer {
-        min-height: 300px;
+    .resultsContainer {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
     }
 
-    .pricingControls {
-        flex-direction: row-reverse;
-        align-items: center;
-        justify-content: space-between;
-        height: auto;
-        width: 100%;
-        gap: 1rem;
+    .statBox,
+    .statBoxGood {
+        padding: 1.25rem;
     }
 
-    .thermometerContainer {
-        display: flex;
-        flex-direction: column-reverse;
-        flex: 1;
-        height: auto;
-        gap: 0.5rem;
+    .statValueBad {
+        font-size: calc(var(--text-h2) * 0.8);
     }
 
-    .thermometerWrapper {
-        width: 100%;
-        height: 12px;
-        background-color: #e0e0e0;
-        border-radius: 999px;
-        overflow: visible;
-        /* Allow indicator to show */
-        position: relative;
-    }
-
-    .thermometerFill {
-        width: 0%;
-        height: 100%;
-        bottom: auto;
-        top: 0;
-        position: absolute;
-        left: 0;
-    }
-
-    .dragIndicator {
-        display: block;
-        position: absolute;
-        right: -12px;
-        top: 50%;
-        transform: translateY(-50%);
-        width: 24px;
-        height: 24px;
-        border-radius: 50%;
-        background-color: var(--color-accent);
-        box-shadow: 0 0 10px var(--color-accent), 0 0 20px var(--color-accent);
-        z-index: 10;
-        animation: bounceHint 1.5s infinite ease-in-out;
-    }
-
-    @keyframes bounceHint {
-
-        0%,
-        100% {
-            transform: translateY(-50%) translateX(0);
-        }
-
-        50% {
-            transform: translateY(-50%) translateX(10px);
-        }
-    }
-
-    .thermometerLabel {
-        font-size: 0.8rem;
-        text-align: left;
-        white-space: nowrap;
-    }
-
-    .priceDisplay {
-        font-size: 3.5rem;
-        min-width: 180px;
-        justify-content: flex-end;
+    .statValueGood {
+        font-size: calc(var(--text-h2) * 0.88);
     }
 }

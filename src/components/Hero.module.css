@@ -64,8 +64,35 @@
     color: var(--color-text-charcoal);
     font-size: var(--text-subtitle);
     line-height: 1.5;
-    max-width: 700px;
+    max-width: 900px;
     opacity: 0.9;
+}
+
+.rotatingTextWrap {
+    display: inline-block;
+    vertical-align: bottom;
+    font-weight: 800;
+
+    /* Deep Mint Gradient Text Effect */
+    background: linear-gradient(90deg, #036B4D 0%, #09BC8A 50%, #036B4D 100%);
+    background-size: 200% auto;
+    color: #09BC8A;
+    /* Fallback for browsers without background-clip text */
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: textShine 3s linear infinite;
+}
+
+.rotatingTextWrap :global(.text-type__cursor) {
+    color: #09BC8A;
+    -webkit-text-fill-color: #09BC8A;
+}
+
+@keyframes textShine {
+    to {
+        background-position: 200% center;
+    }
 }
 
 .ctaButton {
@@ -96,6 +123,10 @@
 }
 
 /* Tablet & Mobile Responsiveness */
+.mobileBreak {
+    display: none;
+}
+
 @media (max-width: 1024px) {
     .headline {
         gap: 1rem;
@@ -104,93 +135,36 @@
     }
 
     .oitoText {
-        font-size: 4.5rem;
+        font-size: calc(var(--text-h1) * 1.125);
     }
 }
 
 @media (max-width: 768px) {
     .hero {
-        padding-top: 100px;
+        padding-top: 60px;
     }
 
     .description {
         padding: 0 1rem;
     }
 
+    .mobileBreak {
+        display: block;
+    }
+
+    .rotatingTextWrap {
+        display: block !important;
+        margin-top: 5px;
+        text-align: center;
+    }
+
     .ctaButton {
         padding: 0.8rem 1.5rem;
         font-size: var(--text-body);
         width: 100%;
-        max-width: 300px;
+        max-width: 320px;
+        white-space: normal;
+        text-align: center;
+        line-height: 1.2;
     }
-}
-
-.scrollIndicator {
-    position: absolute;
-    bottom: 2rem;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.5rem;
-    z-index: 20;
-    opacity: 0;
-    /* Initiated by GSAP */
-}
-
-.scrollText {
-    font-family: var(--font-varela-round);
-    font-size: var(--text-body);
-    color: var(--color-text-charcoal);
-    text-transform: uppercase;
-    /* Revert to uppercase */
-    letter-spacing: 0.05em;
-    line-height: 1;
-    margin-top: 0.25rem;
-}
-
-.scrollArrow {
-    color: var(--color-hero-bg);
-    opacity: 0.8;
-    animation: bounce 2s infinite;
-}
-
-@keyframes bounce {
-
-    0%,
-    20%,
-    50%,
-    80%,
-    100% {
-        transform: translateY(0);
-    }
-
-    40% {
-        transform: translateY(-5px);
-    }
-
-    60% {
-        transform: translateY(-3px);
-    }
-}
-
-.progressBarContainer {
-    width: 4px;
-    height: 60px;
-    background-color: rgba(0, 0, 0, 0.1);
-    border-radius: 2px;
-    overflow: hidden;
-    position: relative;
-}
-
-.progressBar {
-    width: 100%;
-    height: 0%;
-    background-color: var(--color-hero-bg);
-    /* Use brand color */
-    position: absolute;
-    top: 0;
-    left: 0;
-    border-radius: 2px;
 }

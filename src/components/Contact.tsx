@@ -2,7 +2,8 @@
 
 import { useState, useRef, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { ChevronDown } from 'lucide-react';
+import { ChevronDown, Calendar as CalendarIcon, CheckCircle2 } from 'lucide-react';
+import { getCalApi } from "@calcom/embed-react";
 import styles from './Contact.module.css';
 import { sendEmail } from '@/app/actions';
 
@@ -41,6 +42,18 @@ export default function Contact() {
     const [selectedCode, setSelectedCode] = useState(countryCodes[0]);
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const dropdownRef = useRef<HTMLDivElement>(null);
+
+    // Initialise Cal.com API
+    useEffect(() => {
+        (async function () {
+            const cal = await getCalApi();
+            cal("ui", {
+                styles: { branding: { brandColor: "#09bc8a" } },
+                hideEventTypeDetails: false,
+                layout: "month_view"
+            });
+        })();
+    }, []);
 
     // Close dropdown when clicking outside
     useEffect(() => {
@@ -90,9 +103,10 @@ export default function Contact() {
 
     return (
         <section id="contact" className={styles.contact}>
+            {/* ENCABEZADO CENTRADO */}
             <motion.div
-                className={styles.headlineContainer}
-                initial={{ opacity: 0, y: 100 }}
+                className={styles.headerSection}
+                initial={{ opacity: 0, y: 50 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-50px" }}
                 transition={{ duration: 0.8, ease: "easeOut" }}
@@ -101,120 +115,193 @@ export default function Contact() {
                     <span className={styles.brandWord}>oitomatiza</span>
                     con nosotros
                 </h2>
-                <p className={styles.description}>
-                    ¿Listo para transformar tu negocio? Contáctanos para descubrir cómo nuestros servicios pueden elevar tu potencial y optimizar tus resultados. Agenda tu cita y da el primer paso hacia el futuro.
+                <p className={styles.subheadline}>
+                    ¿Listo para transformar tu negocio?
                 </p>
             </motion.div>
 
-            <motion.div
-                className={styles.formContainer}
-                initial={{ opacity: 0, y: 100 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-50px" }}
-                transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
-            >
-                <form id="contact-form" className={styles.form} action={handleSubmit}>
-                    <div className={styles.inputGroup}>
-                        <label htmlFor="name" className={styles.label}>Nombre completo o nombre de la empresa</label>
-                        <input
-                            type="text"
-                            id="name"
-                            name="name"
-                            className={styles.input}
-                            required
-                            placeholder="Tu nombre o el de tu empresa"
-                        />
-                    </div>
+            <div className={styles.contentContainer}>
 
-                    <div className={styles.inputGroup}>
-                        <label htmlFor="email" className={styles.label}>Correo electrónico</label>
-                        <input
-                            type="email"
-                            id="email"
-                            name="email"
-                            className={styles.input}
-                            required
-                            placeholder="nombre@empresa.com"
-                        />
-                    </div>
+                {/* COLUMNA IZQUIERDA: FORMULARIO */}
+                <motion.div
+                    className={styles.leftCol}
+                    initial={{ opacity: 0, x: -50 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true, margin: "-50px" }}
+                    transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
+                >
+                    <p className={styles.colDescription}>
+                        Contáctanos para descubrir cómo nuestros servicios pueden elevar tu potencial y optimizar tus resultados.
+                    </p>
 
-                    <div className={styles.inputGroup}>
-                        <label htmlFor="phone" className={styles.label}>Teléfono</label>
-                        <div className={styles.phoneRow}>
-                            <div className={styles.countryCodeWrapper} ref={dropdownRef}>
-                                <button
-                                    type="button"
-                                    className={styles.countryCodeButton}
-                                    onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                                    aria-haspopup="listbox"
-                                    aria-expanded={isDropdownOpen}
-                                >
-                                    <span className={styles.countryFlag}>{selectedCode.country}</span>
-                                    <span className={styles.countryCodeText}>{selectedCode.code}</span>
-                                    <ChevronDown
-                                        size={14}
-                                        className={`${styles.dropdownChevron} ${isDropdownOpen ? styles.dropdownChevronOpen : ''}`}
-                                    />
-                                </button>
-
-                                {isDropdownOpen && (
-                                    <ul className={styles.dropdownMenu} role="listbox">
-                                        {countryCodes.map((item) => (
-                                            <li
-                                                key={item.code + item.country}
-                                                role="option"
-                                                aria-selected={selectedCode.code === item.code}
-                                                className={`${styles.dropdownItem} ${selectedCode.code === item.code ? styles.dropdownItemActive : ''}`}
-                                                onClick={() => {
-                                                    setSelectedCode(item);
-                                                    setIsDropdownOpen(false);
-                                                }}
-                                            >
-                                                <span className={styles.dropdownCountry}>{item.country}</span>
-                                                <span className={styles.dropdownName}>{item.name}</span>
-                                                <span className={styles.dropdownCode}>{item.code}</span>
-                                            </li>
-                                        ))}
-                                    </ul>
-                                )}
+                    <div className={styles.formContainer}>
+                        <form id="contact-form" className={styles.form} action={handleSubmit}>
+                            <div className={styles.inputGroup}>
+                                <label htmlFor="name" className={styles.label}>Nombre y apellidos</label>
+                                <input
+                                    type="text"
+                                    id="name"
+                                    name="name"
+                                    className={styles.input}
+                                    required
+                                    placeholder="Tu nombre y apellidos"
+                                />
                             </div>
-                            <input
-                                type="tel"
-                                id="phone"
-                                name="phone"
-                                className={`${styles.input} ${styles.phoneInput}`}
-                                placeholder="412 123 4567"
-                            />
-                        </div>
+
+                            <div className={styles.inputGroup}>
+                                <label htmlFor="email" className={styles.label}>Correo electrónico</label>
+                                <input
+                                    type="email"
+                                    id="email"
+                                    name="email"
+                                    className={styles.input}
+                                    required
+                                    placeholder="nombre@empresa.com"
+                                />
+                            </div>
+
+                            <div className={styles.inputGroup}>
+                                <label htmlFor="phone" className={styles.label}>Teléfono</label>
+                                <div className={styles.phoneRow}>
+                                    <div className={styles.countryCodeWrapper} ref={dropdownRef}>
+                                        <button
+                                            type="button"
+                                            className={styles.countryCodeButton}
+                                            onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+                                            aria-haspopup="listbox"
+                                            aria-expanded={isDropdownOpen}
+                                        >
+                                            <span className={styles.countryFlag}>{selectedCode.country}</span>
+                                            <span className={styles.countryCodeText}>{selectedCode.code}</span>
+                                            <ChevronDown
+                                                size={14}
+                                                className={`${styles.dropdownChevron} ${isDropdownOpen ? styles.dropdownChevronOpen : ''}`}
+                                            />
+                                        </button>
+
+                                        {isDropdownOpen && (
+                                            <ul className={styles.dropdownMenu} role="listbox">
+                                                {countryCodes.map((item) => (
+                                                    <li
+                                                        key={item.code + item.country}
+                                                        role="option"
+                                                        aria-selected={selectedCode.code === item.code}
+                                                        className={`${styles.dropdownItem} ${selectedCode.code === item.code ? styles.dropdownItemActive : ''}`}
+                                                        onClick={() => {
+                                                            setSelectedCode(item);
+                                                            setIsDropdownOpen(false);
+                                                        }}
+                                                    >
+                                                        <span className={styles.dropdownCountry}>{item.country}</span>
+                                                        <span className={styles.dropdownName}>{item.name}</span>
+                                                        <span className={styles.dropdownCode}>{item.code}</span>
+                                                    </li>
+                                                ))}
+                                            </ul>
+                                        )}
+                                    </div>
+                                    <input
+                                        type="tel"
+                                        id="phone"
+                                        name="phone"
+                                        className={`${styles.input} ${styles.phoneInput}`}
+                                        placeholder="412 123 4567"
+                                    />
+                                </div>
+                            </div>
+
+                            <div className={styles.inputGroup}>
+                                <label htmlFor="message" className={styles.label}>¿Qué tienes en mente?</label>
+                                <textarea
+                                    id="message"
+                                    name="message"
+                                    className={styles.textarea}
+                                    required
+                                    placeholder="Cuéntanos brevemente sobre tu proyecto o necesidades..."
+                                ></textarea>
+                            </div>
+
+                            <button
+                                type="submit"
+                                disabled={isSubmitting}
+                                className={styles.submitButton}
+                                style={{ opacity: isSubmitting ? 0.7 : 1, cursor: isSubmitting ? 'not-allowed' : 'pointer' }}
+                            >
+                                {isSubmitting ? 'Enviando...' : 'Enviar Solicitud'}
+                            </button>
+
+                            {status && (
+                                <div className={status.type === 'success' ? styles.successMessage : styles.errorMessage}>
+                                    {status.message}
+                                </div>
+                            )}
+                        </form>
                     </div>
+                </motion.div>
 
-                    <div className={styles.inputGroup}>
-                        <label htmlFor="message" className={styles.label}>¿Qué tienes en mente?</label>
-                        <textarea
-                            id="message"
-                            name="message"
-                            className={styles.textarea}
-                            required
-                            placeholder="Cuéntanos brevemente sobre tu proyecto o necesidades..."
-                        ></textarea>
+                {/* SEPARADOR VERTICAL */}
+                <motion.div
+                    className={styles.dividerWrapper}
+                    initial={{ opacity: 0 }}
+                    whileInView={{ opacity: 1 }}
+                    viewport={{ once: true, margin: "-50px" }}
+                    transition={{ duration: 0.8, delay: 0.4 }}
+                >
+                    <div className={styles.dividerLine}></div>
+                    <span className={styles.dividerText}>o</span>
+                    <div className={styles.dividerLine}></div>
+                </motion.div>
+
+                {/* COLUMNA DERECHA: CALENDARIO */}
+                <motion.div
+                    className={styles.rightCol}
+                    initial={{ opacity: 0, x: 50 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true, margin: "-50px" }}
+                    transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
+                >
+                    <p className={styles.colDescription}>
+                        Agenda directamente tu cita en tan solo unos pocos clicks para empezar a explorar los puntos de mejora dentro de tu empresa.
+                    </p>
+
+                    <div className={styles.calContainer}>
+                        <ul className={styles.checklist}>
+                            <li>
+                                <CheckCircle2 size={24} className={styles.checkIcon} />
+                                <div>
+                                    <strong>Auditoría rápida:</strong> Identificamos tus puntos de dolor.
+                                </div>
+                            </li>
+                            <li>
+                                <CheckCircle2 size={24} className={styles.checkIcon} />
+                                <div>
+                                    <strong>Plan de acción:</strong> Te mostramos qué tareas precisan de automatización urgente.
+                                </div>
+                            </li>
+                            <li>
+                                <CheckCircle2 size={24} className={styles.checkIcon} />
+                                <div>
+                                    <strong>Cero compromiso:</strong> 30 minutos de valor, sin presiones de venta.
+                                </div>
+                            </li>
+                        </ul>
+
+                        <p className={styles.calTextSeparator}>
+                            Selecciona el momento que mejor se adapte a tu agenda para una sesión de descubrimiento <strong>sin ningún compromiso.</strong>
+                        </p>
+
+                        <button
+                            className={styles.calButton}
+                            data-cal-link="sebastian-castro"
+                            data-cal-config='{"layout":"month_view"}'
+                        >
+                            <CalendarIcon size={22} />
+                            Agenda tu cita
+                        </button>
                     </div>
+                </motion.div>
 
-                    <button
-                        type="submit"
-                        disabled={isSubmitting}
-                        className={styles.submitButton}
-                        style={{ opacity: isSubmitting ? 0.7 : 1, cursor: isSubmitting ? 'not-allowed' : 'pointer' }}
-                    >
-                        {isSubmitting ? 'Enviando...' : 'Enviar Solicitud'}
-                    </button>
-
-                    {status && (
-                        <div className={status.type === 'success' ? styles.successMessage : styles.errorMessage}>
-                            {status.message}
-                        </div>
-                    )}
-                </form>
-            </motion.div>
+            </div>
         </section>
     );
 }

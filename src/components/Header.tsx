@@ -84,7 +84,7 @@ export default function Header({ isLoaded = true }: { isLoaded?: boolean }) {
                                 className={styles.mobileCta}
                                 onClick={(e) => scrollToSection(e, 'contact')}
                             >
-                                oitomatiza
+                                Contáctanos
                             </button>
                         </nav>
                     </div>
@@ -94,7 +94,7 @@ export default function Header({ isLoaded = true }: { isLoaded?: boolean }) {
                         className={styles.desktopCta}
                         onClick={(e) => scrollToSection(e, 'contact')}
                     >
-                        oitomatiza
+                        Contáctanos
                     </button>
                 </div>
             </header>

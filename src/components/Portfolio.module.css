@@ -1,6 +1,6 @@
 .portfolio {
     padding: 10rem 1rem 6rem;
-    background: radial-gradient(circle at top right, #002a2c, #004346);
+    background: radial-gradient(circle at top right, var(--color-hero-bg-deep), var(--color-hero-bg));
     overflow: hidden;
     position: relative;
     display: flex;
@@ -64,7 +64,7 @@
     text-transform: lowercase;
     font-weight: 400;
     font-size: calc(var(--text-h2) * 1.15);
-    filter: drop-shadow(0 0 15px rgba(9, 188, 138, 0.4));
+    filter: drop-shadow(0 0 15px rgba(var(--color-accent-rgb), 0.4));
     display: inline-block;
     letter-spacing: normal;
 }
@@ -89,8 +89,8 @@
     align-items: center;
     gap: 0.5rem;
     padding: 0.6rem 1rem;
-    background: rgba(9, 188, 138, 0.1);
-    border: 1px solid rgba(9, 188, 138, 0.4);
+    background: rgba(var(--color-accent-rgb), 0.1);
+    border: 1px solid rgba(var(--color-accent-rgb), 0.4);
     border-radius: 999px;
     color: var(--color-accent);
     font-family: var(--font-dm-sans);
@@ -126,7 +126,7 @@
 .bentoCard:hover {
     transform: translateY(-5px);
     box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
-    border-color: rgba(9, 188, 138, 0.3);
+    border-color: rgba(var(--color-accent-rgb), 0.3);
     /* Accent color hint */
 }
 
@@ -135,9 +135,9 @@
 .bentoCard0 {
     grid-column: span 2;
     grid-row: span 2;
-    background: radial-gradient(circle at top left, rgba(9, 188, 138, 0.15), transparent 70%),
+    background: radial-gradient(circle at top left, rgba(var(--color-accent-rgb), 0.15), transparent 70%),
         rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(9, 188, 138, 0.3);
+    border: 1px solid rgba(var(--color-accent-rgb), 0.3);
 }
 
 /* Card 1: Square */
@@ -250,12 +250,12 @@
 .kpiIconWrapper {
     width: 40px;
     height: 40px;
-    background: rgba(9, 188, 138, 0.15);
+    background: rgba(var(--color-accent-rgb), 0.15);
     border-radius: 10px;
     display: flex;
     align-items: center;
     justify-content: center;
-    border: 1px solid rgba(9, 188, 138, 0.2);
+    border: 1px solid rgba(var(--color-accent-rgb), 0.2);
     flex-shrink: 0;
 }
 
@@ -316,7 +316,7 @@
 .workflowIconBox {
     width: 44px;
     height: 44px;
-    background: #004346;
+    background: var(--color-hero-bg);
     border-radius: 12px;
     display: flex;
     align-items: center;
@@ -339,7 +339,7 @@
 .workflowArrow {
     color: var(--color-accent);
     opacity: 0.8;
-    background: #004346;
+    background: var(--color-hero-bg);
     border-radius: 50%;
     padding: 2px;
 }
@@ -353,7 +353,7 @@
     color: var(--color-accent);
     margin-top: 2rem;
     letter-spacing: 0.05em;
-    filter: drop-shadow(0 0 10px rgba(9, 188, 138, 0.2));
+    filter: drop-shadow(0 0 10px rgba(var(--color-accent-rgb), 0.2));
 }
 
 /* RESPONSIVE */

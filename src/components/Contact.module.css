@@ -1,23 +1,20 @@
 .contact {
     padding: 6rem 4rem;
     background-color: transparent;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 4rem;
-    align-items: center;
     max-width: 1400px;
     margin: 0 auto;
 }
 
-.headlineContainer {
-    text-align: left;
+.headerSection {
+    text-align: center;
+    margin-bottom: 4rem;
 }
 
 .headline {
     font-family: var(--font-dm-sans);
     font-size: var(--text-h2);
     color: var(--color-hero-bg);
-    margin-bottom: 1rem;
+    margin-bottom: 0.5rem;
     font-weight: 700;
 }
 
@@ -27,19 +24,67 @@
     line-height: 1;
     font-weight: 400;
     color: var(--color-accent);
-    display: block;
-    margin-bottom: 0.2rem;
+    margin-right: 0.3em;
+    /* Espaciado con la siguiente palabra "con nosotros" */
 }
 
-.description {
+.subheadline {
     font-family: var(--font-dm-sans);
-    font-size: var(--text-body);
+    font-size: var(--text-subtitle);
+    color: var(--color-hero-bg);
+    font-weight: 500;
+    margin-top: 1rem;
+}
+
+.contentContainer {
+    display: flex;
+    align-items: stretch;
+    justify-content: center;
+    gap: 2rem;
+}
+
+.leftCol,
+.rightCol {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.colDescription {
+    font-family: var(--font-dm-sans);
+    font-size: calc(var(--text-body) * 0.95);
     color: var(--color-hero-bg);
     opacity: 0.85;
-    margin-top: 1.5rem;
+    margin-bottom: 2rem;
     line-height: 1.6;
-    max-width: 95%;
-    font-weight: 400;
+    text-align: center;
+}
+
+/* Vertical divider */
+.dividerWrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 2rem;
+    position: relative;
+    color: var(--color-accent);
+    font-family: var(--font-dm-sans);
+    font-weight: 600;
+}
+
+.dividerLine {
+    flex: 1;
+    width: 2px;
+    background-color: var(--color-accent);
+}
+
+.dividerText {
+    padding: 1rem 0;
+    font-size: 1.2rem;
+    color: var(--color-accent);
+    background: transparent;
+    z-index: 1;
 }
 
 .formContainer {
@@ -48,8 +93,71 @@
     border-radius: 40px;
     box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.3);
     width: 100%;
-    justify-self: end;
     color: var(--color-text-light);
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.calContainer {
+    width: 100%;
+    color: var(--color-text-dark);
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: 2rem;
+}
+
+.checklist {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    width: 100%;
+}
+
+.checklist li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    font-family: var(--font-dm-sans);
+    font-size: calc(var(--text-body) * 0.9);
+    line-height: 1.4;
+    color: var(--color-text-charcoal);
+}
+
+.checkIcon {
+    color: var(--color-accent);
+    flex-shrink: 0;
+    margin-top: 0.1rem;
+}
+
+.inlineCalWrapper {
+    width: 100%;
+    flex: 1;
+    min-height: 450px;
+    border-radius: 20px;
+    overflow: hidden;
+    background: transparent;
+}
+
+.calTextSeparator {
+    font-family: var(--font-dm-sans);
+    font-size: calc(var(--text-body) * 0.95);
+    color: var(--color-text-charcoal);
+    text-align: center;
+    margin-top: 1rem;
+    margin-bottom: 0.5rem;
+    width: 100%;
+    align-self: center;
+}
+
+.calButton {
+    align-self: center;
 }
 
 .form {
@@ -170,7 +278,7 @@
     min-width: 240px;
     max-height: 240px;
     overflow-y: auto;
-    background-color: #003638;
+    background-color: var(--color-hero-bg);
     border: 1px solid rgba(255, 255, 255, 0.12);
     border-radius: 14px;
     padding: 0.35rem;
@@ -191,7 +299,6 @@
     }
 }
 
-/* Custom scrollbar for dropdown */
 .dropdownMenu::-webkit-scrollbar {
     width: 5px;
 }
@@ -219,11 +326,11 @@
 }
 
 .dropdownItem:hover {
-    background-color: rgba(9, 188, 138, 0.15);
+    background-color: rgba(var(--color-accent-rgb), 0.15);
 }
 
 .dropdownItemActive {
-    background-color: rgba(9, 188, 138, 0.2);
+    background-color: rgba(var(--color-accent-rgb), 0.2);
 }
 
 .dropdownCountry {
@@ -251,15 +358,37 @@
 .submitButton {
     background-color: var(--color-accent);
     color: var(--color-hero-bg);
-    padding: 1rem;
+    padding: 1rem 1.5rem;
     border-radius: 9999px;
     font-family: var(--font-dm-sans);
     font-weight: 700;
     font-size: var(--text-body);
-    margin-top: 0.5rem;
-    transition: transform 0.2s, background-color 0.2s, color 0.2s;
+    transition: transform 0.2s, background-color 0.2s, color 0.2s, box-shadow 0.2s;
     border: none;
     cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+}
+
+.calButton {
+    background-color: var(--color-accent);
+    color: var(--color-hero-bg);
+    padding: 1.25rem 2.5rem;
+    border-radius: 9999px;
+    font-family: var(--font-dm-sans);
+    font-weight: 700;
+    font-size: calc(var(--text-body) * 1.1);
+    transition: transform 0.2s, background-color 0.2s, color 0.2s, box-shadow 0.2s;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    box-shadow: 0 10px 20px -5px rgba(9, 188, 138, 0.4);
 }
 
 .submitButton:hover {
@@ -269,9 +398,16 @@
     box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.2);
 }
 
+.calButton:hover {
+    background-color: var(--color-hero-bg);
+    color: var(--color-text-light);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px -5px rgba(0, 67, 70, 0.4);
+}
+
 /* ===== Messages ===== */
 .successMessage {
-    background-color: rgba(9, 188, 138, 0.2);
+    background-color: rgba(var(--color-accent-rgb), 0.2);
     border: 1px solid var(--color-accent);
     color: var(--color-accent);
     padding: 1rem;
@@ -295,23 +431,60 @@
 /* ===== Responsive ===== */
 @media (max-width: 900px) {
     .contact {
-        grid-template-columns: 1fr;
         padding: 4rem 1.5rem;
-        gap: 3rem;
-        text-align: center;
-        overflow: hidden;
+        gap: 2rem;
     }
 
-    .headlineContainer {
-        text-align: center;
+    .headerSection {
+        margin-bottom: 2rem;
     }
 
-    .formContainer {
-        padding: 2rem;
-        justify-self: center;
+    .contentContainer {
+        flex-direction: column;
+        gap: 0;
+    }
+
+    .dividerWrapper {
         width: 100%;
-        max-width: 100%;
-        box-sizing: border-box;
+        height: auto;
+        flex-direction: row;
+        margin: 2rem 0;
+    }
+
+    .dividerLine {
+        width: 1px;
+        height: 2px;
+        background-color: var(--color-accent);
+        flex: 1;
+    }
+
+    .dividerText {
+        padding: 0 1rem;
+        color: var(--color-accent);
+        background: transparent;
+    }
+
+    .formContainer,
+    .calContainer {
+        padding: 2rem 1rem;
+        width: 100%;
+    }
+
+    .calContainer {
+        align-items: center;
+        text-align: center;
+    }
+
+    .checklist {
+        align-items: center;
+        text-align: center;
+    }
+
+    .checklist li {
+        align-items: center;
+        text-align: left;
+        /* Keep the text left-aligned relative to the icon, but the list itself centered */
+        justify-content: center;
     }
 
     .dropdownMenu {

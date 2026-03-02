@@ -40,7 +40,7 @@
 
 .oitoText {
     font-family: var(--font-varela-round);
-    color: #09BC8A;
+    color: var(--color-accent);
     text-transform: lowercase;
     font-weight: 400;
     font-size: calc(var(--text-h1) * 1.5);
@@ -74,9 +74,9 @@
     font-weight: 800;
 
     /* Deep Mint Gradient Text Effect */
-    background: linear-gradient(90deg, #036B4D 0%, #09BC8A 50%, #036B4D 100%);
+    background: linear-gradient(90deg, #036B4D 0%, var(--color-accent) 50%, #036B4D 100%);
     background-size: 200% auto;
-    color: #09BC8A;
+    color: var(--color-accent);
     /* Fallback for browsers without background-clip text */
     -webkit-background-clip: text;
     background-clip: text;
@@ -85,8 +85,8 @@
 }
 
 .rotatingTextWrap :global(.text-type__cursor) {
-    color: #09BC8A;
-    -webkit-text-fill-color: #09BC8A;
+    color: var(--color-accent);
+    -webkit-text-fill-color: var(--color-accent);
 }
 
 @keyframes textShine {
@@ -96,8 +96,8 @@
 }
 
 .ctaButton {
-    background-color: var(--color-hero-bg);
-    color: var(--color-text-light);
+    background-color: var(--color-accent);
+    color: var(--color-hero-bg);
     padding: 0.8rem 2.5rem;
     border-radius: 9999px;
     font-family: var(--font-varela-round);
@@ -118,8 +118,8 @@
 .ctaButton:hover {
     transform: translateY(-4px) scale(1.02);
     box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
-    background-color: var(--color-accent);
-    color: var(--color-hero-bg);
+    background-color: var(--color-hero-bg);
+    color: var(--color-text-light);
 }
 
 /* Tablet & Mobile Responsiveness */

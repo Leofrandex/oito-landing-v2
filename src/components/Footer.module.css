@@ -1,6 +1,6 @@
 .footer {
-    background-color: #00383b;
-    /* Slightly darker than hero bg (#004346) for depth */
+    background-color: var(--color-hero-bg);
+    /* Slightly darker than hero bg (var(--color-hero-bg)) for depth */
     color: var(--color-text-light);
     padding: 5rem 2rem 2rem;
     position: relative;
@@ -16,7 +16,7 @@
     left: 0;
     right: 0;
     height: 1px;
-    background: linear-gradient(90deg, transparent, rgba(9, 188, 138, 0.3), transparent);
+    background: linear-gradient(90deg, transparent, rgba(var(--color-accent-rgb), 0.3), transparent);
 }
 
 .container {
@@ -113,7 +113,7 @@ h3.heading {
 .ctaButton {
     background: rgba(255, 255, 255, 0.1);
     color: var(--color-accent);
-    border: 1px solid rgba(9, 188, 138, 0.3);
+    border: 1px solid rgba(var(--color-accent-rgb), 0.3);
     padding: 0.5rem 1rem;
     border-radius: 6px;
     font-size: calc(var(--text-body) * 0.8);
@@ -134,7 +134,7 @@ h3.heading {
 
 .ctaButton:hover {
     background: var(--color-accent);
-    color: #004346;
+    color: var(--color-hero-bg);
 }
 
 .socials {
@@ -156,7 +156,7 @@ h3.heading {
 }
 
 .socialLink:hover {
-    background-color: rgba(9, 188, 138, 0.1);
+    background-color: rgba(var(--color-accent-rgb), 0.1);
     color: var(--color-accent);
     border-color: var(--color-accent);
     transform: translateY(-3px);

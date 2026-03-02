@@ -19,13 +19,13 @@ export async function sendEmail(formData: FormData) {
     }
 
     const resend = new Resend(apiKey);
-    const toEmail = process.env.CONTACT_EMAIL || 'delivered@resend.dev';
+    const toEmail = process.env.CONTACT_EMAIL || 'sebastian.castro@oitove.com';
 
     try {
         const { data, error } = await resend.emails.send({
-            from: 'Contact Form <onboarding@resend.dev>',
+            from: 'Oitove Web <onboarding@resend.dev>',
             to: toEmail,
-            subject: `Nueva Solicitud: ${name}`,
+            subject: `Nueva solicitud: ${name}`,
             text: `Nombre: ${name}\nEmail: ${email}\nTeléfono: ${phone || 'No proporcionado'}\n\nMensaje:\n${message}`,
         });
 

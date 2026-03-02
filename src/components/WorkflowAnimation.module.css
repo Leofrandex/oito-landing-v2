@@ -18,7 +18,7 @@
 
 /* Connection lines between nodes — drawn via stroke-dashoffset in JS */
 .connectionLine {
-    stroke: rgba(0, 67, 70, 0.4);
+    stroke: rgba(var(--color-hero-bg-rgb), 0.4);
     stroke-width: 2.5;
     fill: none;
     opacity: 0;
@@ -33,7 +33,7 @@
 
 /* The icon box — mirrors Portfolio .workflowIconBox */
 .nodeBox {
-    fill: #004346;
+    fill: var(--color-hero-bg);
     stroke: rgba(255, 255, 255, 0.1);
     stroke-width: 1;
     rx: 18;
@@ -45,7 +45,7 @@
 .nodeGroup:hover .nodeBox {
     fill: #005a5e;
     stroke: var(--color-accent);
-    filter: drop-shadow(0 10px 25px rgba(9, 188, 138, 0.2));
+    filter: drop-shadow(0 10px 25px rgba(var(--color-accent-rgb), 0.2));
 }
 
 /* Icon inside the box */

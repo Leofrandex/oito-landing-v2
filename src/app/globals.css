@@ -5,11 +5,13 @@
 :root {
     --color-bg: #ffffff;
     --color-hero-bg: #004346;
+    --color-hero-bg-rgb: 0, 67, 70;
+    --color-hero-bg-deep: #002a2c;
     --color-accent: #09bc8a;
+    --color-accent-rgb: 9, 188, 138;
     --color-text-dark: #1a1a1a;
     --color-text-light: #ffffff;
     --color-text-muted: #e5e5e5;
-    --color-text-charcoal: #333333;
     --color-text-charcoal: #333333;
 
     /* Typography Standards */

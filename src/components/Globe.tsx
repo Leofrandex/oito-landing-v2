@@ -35,7 +35,7 @@ export default function Globe() {
             mapSamples: 16000,
             mapBrightness: 6,
             baseColor: [1, 1, 1],
-            markerColor: [0.03, 0.73, 0.54], // Branding green #09bc8a
+            markerColor: [0.03, 0.73, 0.54], // Branding green var(--color-accent)
             glowColor: [1, 1, 1],
             opacity: 1, // Transparency
             markers: [],
